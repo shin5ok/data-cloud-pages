@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NotebookLM: AI Research Assistant Infographic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #F8F9FA;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .brand-text { color: #007BFF; }
+        .brand-bg { background-color: #007BFF; }
+        .brand-bg-light { background-color: #A8D5FF; }
+        .brand-border { border-color: #007BFF; }
+        .text-dark { color: #343A40; }
+        .card {
+            background-color: #FFFFFF;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            padding: 1.5rem;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
+        }
+        .flow-box {
+            border: 2px solid #52A9FF;
+            background-color: white;
+            padding: 1rem;
+            text-align: center;
+            border-radius: 0.5rem;
+            flex-grow: 1;
+        }
+        .flow-arrow {
+            font-size: 2rem;
+            color: #007BFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 0.5rem;
+        }
+    </style>
+</head>
+<body class="text-dark">
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-6xl font-bold mb-2">NotebookLM</h1>
+            <p class="text-xl md:text-2xl font-light text-gray-600">あなたの情報源に基づく、AIリサーチ・ライティングパートナー</p>
+        </header>
+
+        <section id="introduction" class="mb-16">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+                <div class="md:col-span-2">
+                    <h2 class="text-3xl font-bold mb-4 brand-text">AIの信頼性を再定義する</h2>
+                    <p class="text-lg leading-relaxed mb-4">
+                        NotebookLMは、インターネット全体から情報を引用するのではなく、あなたが提供した特定の文書（PDF、Googleドキュメント、ウェブサイトなど）のみに基づいて回答を生成する「ソース接地型」AIです。これにより、AIがもっともらしい嘘をつく「ハルシネーション」のリスクを劇的に低減し、すべての回答に検証可能な引用を提示します。
+                    </p>
+                    <p class="text-lg leading-relaxed">
+                        一般的なAIが「何でも屋」だとすれば、NotebookLMはあなたが与えた資料だけを完璧に読み込んだ、極めて優秀な「専門家アシスタント」です。
+                    </p>
+                </div>
+                <div class="card text-center p-8 bg-blue-50">
+                    <div class="text-6xl font-bold brand-text">100%</div>
+                    <div class="text-xl font-semibold mt-2">ソース接地型</div>
+                    <p class="text-gray-600 mt-2">AIの回答は、すべてあなたの提供した資料に基づきます。</p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-16 border-t-2 brand-border border-opacity-30">
+
+        <section id="features" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-10">コア機能：情報を知識に変えるツール群</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="card">
+                    <div class="text-4xl mb-4">📝</div>
+                    <h3 class="text-xl font-bold mb-2">ノートブックガイド</h3>
+                    <p>ワンクリックで、資料の要約、FAQリスト、タイムライン、学習ガイドなどを自動生成。複雑な情報を瞬時に構造化します。</p>
+                </div>
+                <div class="card">
+                    <div class="text-4xl mb-4">💬</div>
+                    <h3 class="text-xl font-bold mb-2">引用付きQ&A</h3>
+                    <p>資料に関する複雑な質問に対し、根拠となる引用付きで回答。引用箇所をクリックすれば、原文を即座に確認できます。</p>
+                </div>
+                <div class="card">
+                    <div class="text-4xl mb-4">🎧</div>
+                    <h3 class="text-xl font-bold mb-2">音声概要</h3>
+                    <p>資料の内容を、AIが議論するポッドキャスト形式で要約。聴覚的な学習や、移動中のインプットを可能にします。</p>
+                </div>
+                <div class="card">
+                    <div class="text-4xl mb-4">🧠</div>
+                    <h3 class="text-xl font-bold mb-2">マインドマップ</h3>
+                    <p>ソース内の概念やトピック間の関連性を視覚的に表示。情報の構造を直感的に把握し、新たな発見を促します。</p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-16 border-t-2 brand-border border-opacity-30">
+
+        <section id="how-it-works" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-4">NotebookLMの心臓部：RAGフレームワーク</h2>
+            <p class="text-center text-lg text-gray-600 mb-10 max-w-3xl mx-auto">NotebookLMの信頼性は、RAG（検索拡張生成）と呼ばれる技術に基づいています。これは、AIが回答を作成する前に、まず関連情報をあなたの資料から探し出す仕組みです。</p>
+            <div class="card md:col-span-2 p-6">
+                 <div class="flex flex-col md:flex-row items-center justify-around space-y-4 md:space-y-0 md:space-x-4">
+                    <div class="flow-box"><strong>1. アップロードと検索</strong><br>資料をベクトル化し、質問と意味的に近い部分を検索</div>
+                    <div class="flow-arrow">➡️</div>
+                    <div class="flow-box"><strong>2. コンテキスト拡張</strong><br>検索結果を元の質問に付加し、AIへの指示を強化</div>
+                    <div class="flow-arrow">➡️</div>
+                    <div class="flow-box"><strong>3. 接地された生成</strong><br>AI (Gemini) が拡張された情報のみに基づき、引用付きで回答を作成</div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-16 border-t-2 brand-border border-opacity-30">
+
+        <section id="use-cases" class="mb-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl font-bold mb-4">誰のためのツールか？</h2>
+                    <p class="text-lg leading-relaxed">NotebookLMは、特定の情報源を深く掘り下げ、分析、要約、または再構成する必要があるすべての人にとって強力なツールです。特に、以下のようなユーザーに高い価値を提供します。</p>
+                    <ul class="list-disc list-inside mt-4 space-y-2 text-lg">
+                        <li><strong>研究者・学生:</strong> 大量の論文レビュー、試験対策、論文執筆を効率化。</li>
+                        <li><strong>ビジネスプロフェッショナル:</strong> 市場分析、法務文書の読解、営業資料の作成を加速。</li>
+                        <li><strong>コンテンツ制作者:</strong> 膨大なリサーチ資料からアイデアを抽出し、記事の初稿を作成。</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-bold text-center mb-4">ユーザータイプ別 親和性</h3>
+                    <div class="chart-container">
+                        <canvas id="useCasesChart"></canvas>
+                    </div>
+                     <p class="text-center text-sm text-gray-500 mt-2">ソース資料で強調されているユースケースに基づき、親和性の高さをランク付け。</p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-16 border-t-2 brand-border border-opacity-30">
+
+        <section id="plans" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-10">プランと提供形態</h2>
+             <p class="text-center text-lg text-gray-600 mb-10 max-w-3xl mx-auto">個人の学習から大規模な組織利用まで、NotebookLMは柔軟なプランを提供します。主な違いは、利用可能なリソース量と、エンタープライズレベルのセキュリティ機能の有無です。</p>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse card">
+                    <thead>
+                        <tr class="brand-bg text-white">
+                            <th class="p-3 font-bold uppercase">機能/制限</th>
+                            <th class="p-3 font-bold uppercase text-center">無料版</th>
+                            <th class="p-3 font-bold uppercase text-center">Plus</th>
+                            <th class="p-3 font-bold uppercase text-center">Enterprise</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <tr class="hover:bg-gray-50">
+                            <td class="p-3 font-semibold">対象ユーザー</td>
+                            <td class="p-3 text-center">個人・学生</td>
+                            <td class="p-3 text-center">パワーユーザー、チーム</td>
+                            <td class="p-3 text-center">大規模組織</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="p-3 font-semibold">ソース数/ノートブック</td>
+                            <td class="p-3 text-center">50</td>
+                            <td class="p-3 text-center">300</td>
+                            <td class="p-3 text-center">300</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="p-3 font-semibold">クエリ数/日</td>
+                            <td class="p-3 text-center">50</td>
+                            <td class="p-3 text-center">500</td>
+                            <td class="p-3 text-center">500</td>
+                        </tr>
+                         <tr class="hover:bg-gray-50">
+                            <td class="p-3 font-semibold">音声概要生成数/日</td>
+                            <td class="p-3 text-center">3</td>
+                            <td class="p-3 text-center">20</td>
+                            <td class="p-3 text-center">20</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="p-3 font-semibold">エンタープライズセキュリティ</td>
+                            <td class="p-3 text-center text-red-500 font-bold">✗</td>
+                            <td class="p-3 text-center text-red-500 font-bold">✗</td>
+                            <td class="p-3 text-center text-green-500 font-bold">✓</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="p-3 font-semibold">提供形態</td>
+                            <td class="p-3 text-center">Googleアカウント</td>
+                            <td class="p-3 text-center">Google One / Workspace</td>
+                            <td class="p-3 text-center">Google Cloud</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <hr class="my-16 border-t-2 brand-border border-opacity-30">
+        
+        <section id="swot" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-10">強みと考慮点</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="card border-t-4 border-green-500">
+                    <h3 class="text-2xl font-bold mb-4 text-green-600">主な強み</h3>
+                    <ul class="space-y-3 text-lg">
+                        <li class="flex items-start"><span class="text-green-500 mr-2 mt-1">✓</span><span><strong>高い事実精度:</strong> ソース接地型でハルシネーションを抑制。</span></li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2 mt-1">✓</span><span><strong>効率的な情報処理:</strong> 大量の複雑な資料を素早く要約・分析。</span></li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2 mt-1">✓</span><span><strong>多言語・マルチモーダル:</strong> 言語の壁を越え、画像やグラフも理解。</span></li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2 mt-1">✓</span><span><strong>強固なプライバシー:</strong> ユーザーデータはモデルの学習に使用されない。</span></li>
+                    </ul>
+                </div>
+                <div class="card border-t-4 border-yellow-500">
+                    <h3 class="text-2xl font-bold mb-4 text-yellow-600">認識されている弱点</h3>
+                     <ul class="space-y-3 text-lg">
+                        <li class="flex items-start"><span class="text-yellow-500 mr-2 mt-1">✗</span><span><strong>インターネットアクセス不可:</strong> 最新情報や資料外の知識は扱えない。</span></li>
+                        <li class="flex items-start"><span class="text-yellow-500 mr-2 mt-1">✗</span><span><strong>ソース品質への依存:</strong> 提供する資料の質が出力の質を決定する。</span></li>
+                        <li class="flex items-start"><span class="text-yellow-500 mr-2 mt-1">✗</span><span><strong>利用制限:</strong> 各プランにはクエリ数やファイルサイズの上限がある。</span></li>
+                        <li class="flex items-start"><span class="text-yellow-500 mr-2 mt-1">✗</span><span><strong>モバイル機能:</strong> ウェブ版に比べ、モバイルアプリの機能は限定的。</span></li>
+                    </ul>
+                </div>
+            </div>
+            <p class="text-center text-gray-600 mt-8 max-w-3xl mx-auto">弱点の多くは、最大の強みである「正確性」を担保するための意図的な設計上の選択です。これは、新しい情報を発見するツールではなく、既知の情報を深く探求するツールであることを示しています。</p>
+        </section>
+
+
+    </main>
+    
+    <footer class="text-center p-6 bg-gray-800 text-white mt-12">
+        <p>このインフォグラフィックは、Google NotebookLMに関する公開情報を基に作成されました。</p>
+    </footer>
+
+    <script>
+        const wrapLabel = (label, maxLength = 16) => {
+            if (typeof label !== 'string' || label.length <= maxLength) {
+                return label;
+            }
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = '';
+            words.forEach(word => {
+                if ((currentLine + ' ' + word).length > maxLength && currentLine.length > 0) {
+                    lines.push(currentLine);
+                    currentLine = word;
+                } else {
+                    currentLine = currentLine ? currentLine + ' ' + word : word;
+                }
+            });
+            lines.push(currentLine);
+            return lines;
+        };
+
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            }
+            return label;
+        };
+        
+        const commonChartOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        color: '#343A40',
+                        font: {
+                            size: 14
+                        }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        title: tooltipTitleCallback
+                    },
+                    backgroundColor: '#343A40',
+                    titleFont: { size: 16 },
+                    bodyFont: { size: 14 },
+                    padding: 10,
+                    cornerRadius: 4
+                }
+            }
+        };
+
+        const useCasesCtx = document.getElementById('useCasesChart').getContext('2d');
+        const useCasesChart = new Chart(useCasesCtx, {
+            type: 'bar',
+            data: {
+                labels: ['研究者・学生', 'ビジネスプロフェッショナル', 'コンテンツ制作者', '法務・コンプライアンス'].map(l => wrapLabel(l)),
+                datasets: [{
+                    label: '親和性スコア',
+                    data: [95, 85, 75, 70],
+                    backgroundColor: [
+                        '#004AAD',
+                        '#007BFF',
+                        '#52A9FF',
+                        '#A8D5FF'
+                    ],
+                    borderColor: '#FFFFFF',
+                    borderWidth: 2,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                ...commonChartOptions,
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                         grid: { display: false },
+                         ticks: { display: false }
+                    },
+                    y: {
+                        grid: { display: false },
+                         ticks: { 
+                            color: '#343A40',
+                            font: { size: 14 }
+                         }
+                    }
+                },
+                 plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: tooltipTitleCallback
+                        },
+                        backgroundColor: '#343A40',
+                        titleFont: { size: 16 },
+                        bodyFont: { size: 14 },
+                        padding: 10,
+                        cornerRadius: 4
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
