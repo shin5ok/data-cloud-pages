@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>インフォグラフィック：ベクトル検索の世界（技術解説強化版）</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: #F0F8FF; 
+        }
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 50vh;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+            .use-case-chart-container {
+                height: 500px;
+            }
+        }
+        .flowchart-item {
+            background-color: #EBF8FF;
+            border: 2px solid #80C2FF;
+            color: #004AAD;
+        }
+        .flowchart-arrow {
+            color: #0085FF;
+            font-weight: 900;
+        }
+        .tech-card {
+            background-color: #EBF8FF;
+            border-left: 5px solid #0085FF;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center my-8 md:my-16">
+            <h1 class="text-4xl md:text-6xl font-black text-[#004AAD] tracking-tight">ベクトル検索の世界へようこそ</h1>
+            <p class="mt-4 text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">キーワードの一致だけじゃない。「意味」で繋がる、次世代の検索技術を体験しよう。</p>
+        </header>
+
+        <section id="introduction" class="card text-center">
+            <h2 class="text-2xl font-bold text-[#004AAD]">検索の本質的な進化</h2>
+            <p class="mt-2 text-slate-600">ベクトル検索とは、単語や文章が持つ「意味」や「ニュアンス」をAIが理解し、関連性の高い情報を探し出す技術です。これにより、検索体験はより直感的で人間に近いものになります。</p>
+            <div class="mt-6 bg-[#004AAD] text-white p-6 rounded-lg inline-block">
+                <div class="text-6xl font-black">85%</div>
+                <div class="mt-2 text-lg font-bold text-[#BFE0FF]">のユーザーがより関連性の高い結果を実感</div>
+            </div>
+             <p class="mt-4 text-sm text-slate-500">※概念的なデータに基づく推定値</p>
+        </section>
+
+        <section id="comparison" class="card">
+            <h2 class="text-2xl md:text-3xl font-bold text-center text-[#004AAD] mb-8">検索方法の決定的な違い</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                
+                <div class="border-2 border-slate-300 rounded-lg p-6 h-full">
+                    <h3 class="text-2xl font-bold text-slate-500 mb-4 flex items-center"><span class="text-3xl mr-3">🧐</span>キーワード検索</h3>
+                    <p class="mb-4 text-slate-600">「単語」が完全に一致するものを探す、融通の利かない司書さんのような検索方法です。</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start"><span class="text-red-500 font-bold mr-2">✕</span><span class="text-slate-700"><strong>探し方:</strong> 単語の完全一致</span></li>
+                        <li class="flex items-start"><span class="text-red-500 font-bold mr-2">✕</span><span class="text-slate-700"><strong>柔軟性:</strong> 低い（「PC」と「パソコン」を区別）</span></li>
+                        <li class="flex items-start"><span class="text-red-500 font-bold mr-2">✕</span><span class="text-slate-700"><strong>例:</strong> 「猫の育て方」で検索 → タイトルが違う『子猫を育てる』は見逃す。</span></li>
+                    </ul>
+                </div>
+                
+                <div class="border-2 border-[#0085FF] bg-blue-50 rounded-lg p-6 h-full">
+                    <h3 class="text-2xl font-bold text-[#004AAD] mb-4 flex items-center"><span class="text-3xl mr-3">👩‍🏫</span>ベクトル検索</h3>
+                    <p class="mb-4 text-[#004AAD]">「意味」を理解し、関連性が高いものを幅広く提案する、経験豊富な司書さんのような検索方法です。</p>
+                     <ul class="space-y-3">
+                        <li class="flex items-start"><span class="text-green-500 font-bold mr-2">✓</span><span class="text-slate-700"><strong>探し方:</strong> 意味・文脈の近さ</span></li>
+                        <li class="flex items-start"><span class="text-green-500 font-bold mr-2">✓</span><span class="text-slate-700"><strong>柔軟性:</strong> 高い（「PC」と「パソコン」を同一視）</span></li>
+                        <li class="flex items-start"><span class="text-green-500 font-bold mr-2">✓</span><span class="text-slate-700"><strong>例:</strong> 「猫の育て方」で検索 → 『子猫を育てる』や『ネコの気持ち』も提案。</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="how-it-works" class="card">
+            <h2 class="text-2xl md:text-3xl font-bold text-center text-[#004AAD] mb-4">ベクトル検索の技術的な仕組み</h2>
+            <p class="text-center text-slate-600 max-w-2xl mx-auto mb-8">ベクトル検索は、データを「ベクトル化」し、その「近さ」で関連性を判断します。このプロセスは、主に3つのコア技術によって支えられています。</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-8">
+                <div class="tech-card">
+                    <h3 class="font-bold text-lg text-[#004AAD] mb-2">1. 埋め込みモデル (Embedding)</h3>
+                    <p class="text-slate-700 text-sm">BERTやCLIPといったAIモデルが、テキストや画像などのデータが持つ文脈や特徴を抽出し、高次元の「ベクトル（意味の座標）」へと変換します。これが「意味を理解する」AIの頭脳部分です。</p>
+                </div>
+                <div class="tech-card">
+                    <h3 class="font-bold text-lg text-[#004AAD] mb-2">2. ベクトルデータベース</h3>
+                    <p class="text-slate-700 text-sm">生成された数百万〜数十億ものベクトルを効率的に保存し、管理するための専用データベースです。従来のデータベースとは異なり、「ベクトルの近さ」を基準とした検索に特化しています。</p>
+                </div>
+                 <div class="tech-card">
+                    <h3 class="font-bold text-lg text-[#004AAD] mb-2">3. 近似最近傍探索 (ANN)</h3>
+                    <p class="text-slate-700 text-sm">膨大なベクトルの中から、検索対象と「完全に」最も近いものを探すのではなく、「ほぼ」最も近いものを超高速で見つけ出すアルゴリズムです。速度と精度の最適なバランスを実現します。</p>
+                </div>
+            </div>
+
+            <p class="text-center text-slate-600 max-w-2xl mx-auto mt-12 mb-4">下のグラフは、言葉の意味が「ベクトル空間」という地図上でどのように配置されるかを示したイメージです。「犬」に関連する言葉は近くに集まり、「机」のような無関係な言葉は遠くに配置されます。</p>
+            <div class="chart-container">
+                <canvas id="vectorSpaceChart"></canvas>
+            </div>
+        </section>
+        
+        <section id="use-cases" class="card">
+             <h2 class="text-2xl md:text-3xl font-bold text-center text-[#004AAD] mb-4">広がる応用分野と新たなユースケース</h2>
+             <p class="text-center text-slate-600 max-w-2xl mx-auto mb-8">この革新的な技術は、一般的なサービスから専門的な研究開発まで、幅広い分野でその価値を発揮しています。</p>
+            <div class="chart-container use-case-chart-container">
+                <canvas id="useCaseChart"></canvas>
+            </div>
+             <p class="text-center text-slate-600 max-w-2xl mx-auto mt-8">グラフは、各分野におけるベクトル検索の活用度やインパクトを示しています。ECサイトやQ&Aのような身近な例から、不正検知や創薬といった社会的に重要な分野まで、その応用は拡大し続けています。</p>
+        </section>
+
+        <footer class="text-center my-8 md:my-12">
+            <p class="text-slate-600">このインフォグラフィックは、ベクトル検索の基本概念とそれを支える技術を視覚的に解説したものです。</p>
+            <p class="text-sm text-slate-500 mt-2">© 2025 Canvas Infographics. All Rights Reserved.</p>
+        </footer>
+
+    </main>
+
+    <script>
+        const brilliantBlues = {
+            deep: '#004AAD',
+            bright: '#0085FF',
+            light: '#80C2FF',
+            bg: '#BFE0FF'
+        };
+
+        const textColor = '#1E293B';
+        const gridColor = '#E2E8F0';
+
+        const defaultChartOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: textColor,
+                        font: {
+                            size: 14
+                        }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                              return label.join(' ');
+                            }
+                            return label;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: {
+                        color: textColor,
+                        font: {
+                            size: 12
+                        },
+                    },
+                    grid: {
+                        color: gridColor
+                    }
+                },
+                y: {
+                    ticks: {
+                        color: textColor,
+                        font: {
+                            size: 12
+                        }
+                    },
+                    grid: {
+                        color: gridColor
+                    },
+                    beginAtZero: true
+                }
+            }
+        };
+
+        function wrapLabel(str, maxWidth) {
+            if (str.length <= maxWidth) {
+                return str;
+            }
+            let wrapped = [];
+            let currentLine = '';
+            const words = str.split(' ');
+            for (let i = 0; i < words.length; i++) {
+                const word = words[i];
+                if ((currentLine + ' ' + word).trim().length > maxWidth) {
+                    if(currentLine !== '') wrapped.push(currentLine);
+                    currentLine = word;
+                } else {
+                    currentLine = (currentLine + ' ' + word).trim();
+                }
+            }
+            if (currentLine) {
+                wrapped.push(currentLine);
+            }
+            return wrapped.length > 0 ? wrapped : [str];
+        }
+
+
+        const ctxVector = document.getElementById('vectorSpaceChart').getContext('2d');
+        new Chart(ctxVector, {
+            type: 'scatter',
+            data: {
+                labels: ['犬', 'dog', 'ワンちゃん', 'ポチ', '机', '椅子', '猫', 'にゃーん'],
+                datasets: [{
+                    label: '「犬」の仲間',
+                    data: [{x: 1, y: 1.2}, {x: 1.5, y: 1.8}, {x: 0.8, y: 1.5}, {x: 1.2, y: 0.9}],
+                    backgroundColor: brilliantBlues.bright,
+                    pointRadius: 8,
+                    pointHoverRadius: 12
+                }, {
+                    label: '「猫」の仲間',
+                     data: [{x: 5, y: 4.8}, {x: 5.5, y: 5.2}],
+                     backgroundColor: brilliantBlues.deep,
+                     pointRadius: 8,
+                     pointHoverRadius: 12
+                }, {
+                    label: '無関係な言葉',
+                    data: [{x: 8, y: 2}, {x: 8.5, y: 2.5}],
+                    backgroundColor: '#94A3B8',
+                    pointRadius: 8,
+                    pointHoverRadius: 12
+                }]
+            },
+            options: {
+                ...defaultChartOptions,
+                scales: {
+                     x: { ...defaultChartOptions.scales.x, title: { display: true, text: '意味の次元 A', color: textColor } },
+                     y: { ...defaultChartOptions.scales.y, title: { display: true, text: '意味の次元 B', color: textColor } }
+                },
+                plugins: {
+                    ...defaultChartOptions.plugins,
+                    tooltip: {
+                         ...defaultChartOptions.plugins.tooltip,
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.chart.data.labels[context.dataIndex] || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                label += `(${context.parsed.x}, ${context.parsed.y})`;
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        const useCaseLabels = [
+            '高精度なQ&Aチャットボット', 
+            'ECサイト推薦機能', 
+            '異常検知（不正利用対策）',
+            '多言語対応の画像検索', 
+            '創薬・ゲノム解析',
+            '音楽・動画配信サービス', 
+            'セマンティックコード検索',
+            '論文・特許情報の探索'
+        ];
+        const wrappedUseCaseLabels = useCaseLabels.map(label => wrapLabel(label, 16));
+
+        const ctxUseCase = document.getElementById('useCaseChart').getContext('2d');
+        new Chart(ctxUseCase, {
+            type: 'bar',
+            data: {
+                labels: wrappedUseCaseLabels,
+                datasets: [{
+                    label: 'ベクトル検索の活用度/インパクト',
+                    data: [95, 90, 88, 85, 82, 80, 78, 75],
+                    backgroundColor: [
+                        '#004AAD',
+                        '#005BC5',
+                        '#006DE0',
+                        '#0085FF',
+                        '#40A4FF',
+                        '#80C2FF',
+                        '#AADFFF',
+                        '#BFE0FF'
+                    ],
+                    borderColor: '#004AAD',
+                    borderWidth: 1,
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                ...defaultChartOptions,
+                indexAxis: 'y', 
+                 scales: {
+                    x: {
+                        ...defaultChartOptions.scales.x,
+                        max: 100,
+                        title: { display: true, text: '活用度・インパクト (推定値)', color: textColor}
+                    },
+                    y: {
+                        ...defaultChartOptions.scales.y,
+                        ticks: {
+                            ...defaultChartOptions.scales.y.ticks,
+                            font: { size: 11 }
+                        }
+                    }
+                },
+                plugins: {
+                    ...defaultChartOptions.plugins,
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = useCaseLabels[item.dataIndex]; 
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
