@@ -1,0 +1,40 @@
+name: Build and Deploy GitHub Pages
+
+# mainブランチにpushされたときに実行
+on:
+  push:
+    branches:
+      - main
+
+# パーミッションの設定 (gh-pagesブランチへの書き込みに必要)
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. リポジトリのコードをチェックアウト
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2. ファイル一覧からindex.htmlを生成
+      - name: Generate index.html
+        run: |
+          echo '<!DOCTYPE html>' > index.html
+          echo '<html lang="ja">' >> index.html
+          echo '<head><meta charset="UTF-8"><title>File Index</title></head>' >> index.html
+          echo '<body><h1>File Index</h1><ul>' >> index.html
+          # 隠しファイルと指定ファイルを除外してリストを作成
+          find . -type f -not -path '*/.*' -not -name 'index.html' -not -name 'README.md' | sed 's|^\./||' | while read -r file; do
+            echo "  <li><a href=\"$file\">$file</a></li>" >> index.html
+          done
+          echo '</ul></body></html>' >> index.html
+
+      # 3. 生成したファイルをgh-pagesブランチにデプロイ
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
+          # publish_branch: gh-pages # デプロイ先のブランチ名 (デフォルトでgh-pages)
