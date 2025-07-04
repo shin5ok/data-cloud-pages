@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>インフォグラフィック: AttentionからDiffusionへ - LLMアーキテクチャの進化</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: #051923;
+            color: #f0f8ff;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 50vh;
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #00A6FB, #0582CA);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .card {
+            background-color: #003554;
+            border: 1px solid #006494;
+        }
+        .arrow {
+            font-size: 2.5rem;
+            color: #00A6FB;
+            line-height: 1;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center my-12 md:my-16">
+            <h1 class="text-4xl md:text-6xl font-black gradient-text mb-4">AttentionからDiffusionへ</h1>
+            <p class="text-xl md:text-2xl font-bold text-gray-300">LLMアーキテクチャの進化を紐解く</p>
+        </header>
+
+        <main class="space-y-20 md:space-y-28">
+
+            <section id="problem">
+                <h2 class="text-3xl font-bold text-center mb-8">Attention以前の課題：薄れる記憶</h2>
+                <p class="text-center max-w-2xl mx-auto text-gray-400 mb-12">初期のモデル（RNN）は文章を一つずつ処理する性質上、文が長くなるほど初期の情報が失われる「長期依存関係」の問題を抱えていました。</p>
+                <div class="card rounded-2xl shadow-lg p-6 flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4 text-center">
+                    <div class="font-bold text-lg p-3 bg-sky-900 rounded-lg">私</div>
+                    <div class="text-gray-500 text-2xl">→</div>
+                    <div class="font-bold text-lg p-3 bg-sky-800 rounded-lg">は昨日、</div>
+                    <div class="text-gray-500 text-2xl">→</div>
+                    <div class="font-bold text-lg p-3 bg-sky-700 rounded-lg">友人が勧めてくれた<span class="text-cyan-300">本</span></div>
+                    <div class="text-gray-500 text-2xl">→</div>
+                    <div class="font-bold text-lg p-3 bg-sky-600 rounded-lg">を読み始めたが、</div>
+                    <div class="text-gray-500 text-2xl">→</div>
+                    <div class="font-bold text-lg p-3 bg-sky-500 rounded-lg opacity-50">それ</div>
+                    <div class="text-gray-500 text-2xl">→</div>
+                    <div class="font-bold text-lg p-3 bg-sky-400 rounded-lg opacity-30">は面白かった。</div>
+                </div>
+                <p class="text-center mt-4 text-gray-500 text-sm">後ろの単語「それ」を解釈する頃には、「本」の情報が薄れてしまう。</p>
+            </section>
+            
+            <section id="solution">
+                <h2 class="text-3xl font-bold text-center mb-8">革新：Attention機構の登場</h2>
+                <p class="text-center max-w-2xl mx-auto text-gray-400 mb-12">Attentionは、単語間の関連性を直接計算することでこの問題を解決。データベース検索のように、関連性の高い情報（Value）を効率的に引き出します。</p>
+                <div class="card rounded-2xl shadow-lg p-8 grid grid-cols-1 md:grid-cols-5 gap-6 items-center text-center">
+                    <div class="md:col-span-2 space-y-4">
+                        <div class="bg-gray-800 p-4 rounded-lg">
+                            <p class="font-bold text-cyan-400 text-lg">Query (Q)</p>
+                            <p class="text-sm text-gray-300">知りたい情報：「それ」</p>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded-lg">
+                            <p class="font-bold text-cyan-400 text-lg">Key (K)</p>
+                            <p class="text-sm text-gray-300">情報の索引：「私」「本」「友人」...</p>
+                        </div>
+                    </div>
+                    <div class="arrow text-center hidden md:block">&rarr;</div>
+                     <div class="arrow text-center rotate-90 md:hidden">&darr;</div>
+                    <div class="md:col-span-2 bg-gray-800 p-4 rounded-lg">
+                        <p class="font-bold text-cyan-400 text-lg">Value (V)</p>
+                        <p class="text-sm text-gray-300">情報の本体：「本」の持つ意味情報</p>
+                        <p class="mt-4 text-xl font-extrabold text-white animate-pulse">💡 「それ」 &asymp; 「本」</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="tradeoff">
+                <h2 class="text-3xl font-bold text-center mb-8">Attentionの光と影</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="card rounded-2xl shadow-lg p-6">
+                        <h3 class="font-bold text-2xl text-center mb-4 text-green-400">強み (Strengths)</h3>
+                        <ul class="space-y-4 text-gray-300">
+                            <li class="flex items-start"><span class="text-2xl mr-3">🔗</span><span><strong class="font-semibold text-white">長期依存の解決:</strong> 距離に関係なく単語の関連性を捉え、文脈を正確に理解。</span></li>
+                            <li class="flex items-start"><span class="text-2xl mr-3">⚡️</span><span><strong class="font-semibold text-white">並列計算による高速化:</strong> 全単語を一度に処理でき、GPUでの学習が劇的に高速に。</span></li>
+                        </ul>
+                    </div>
+                    <div class="card rounded-2xl shadow-lg p-6">
+                        <h3 class="font-bold text-2xl text-center mb-4 text-red-400">弱点 (Weaknesses)</h3>
+                        <p class="text-center text-gray-400 mb-4">最大の弱点は、入力長が伸びるにつれて計算量が爆発的に増加することです。</p>
+                        <div class="chart-container h-56">
+                            <canvas id="complexityChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="evolution">
+                <h2 class="text-3xl font-bold text-center mb-8">次なる進化：Diffusionモデル</h2>
+                <p class="text-center max-w-2xl mx-auto text-gray-400 mb-12">Transformerの課題を克服すべく、異なる発想のアーキテクチャが登場。それが画像生成で名を馳せたDiffusionモデルです。</p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                    <div class="card rounded-2xl shadow-lg p-6">
+                        <h3 class="font-bold text-xl text-center mb-4">Transformer (自己回帰型)</h3>
+                        <p class="text-sm text-center text-gray-400 mb-6">「次に来る単語」を一つずつ順番に予測する。</p>
+                        <div class="flex items-center justify-center space-x-2 font-mono text-sm">
+                            <span class="p-2 bg-gray-800 rounded">単語1</span>
+                            <span class="arrow text-xl">&rarr;</span>
+                            <span class="p-2 bg-gray-800 rounded">単語2</span>
+                            <span class="arrow text-xl">&rarr;</span>
+                            <span class="p-2 bg-gray-800 rounded">単語3</span>
+                            <span class="arrow text-xl">&rarr;</span>
+                            <span class="p-2 bg-gray-700 rounded">...</span>
+                        </div>
+                    </div>
+                    <div class="card rounded-2xl shadow-lg p-6">
+                        <h3 class="font-bold text-xl text-center mb-4">Diffusionモデル (反復的洗練)</h3>
+                        <p class="text-sm text-center text-gray-400 mb-6">不正確な全体像からノイズを除去し、徐々に洗練させる。</p>
+                         <div class="flex items-center justify-center space-x-2 font-mono text-sm">
+                            <span class="p-2 bg-gray-800 rounded filter blur-sm">文章全体</span>
+                            <span class="arrow text-xl">&rarr;</span>
+                            <span class="p-2 bg-gray-800 rounded filter blur-xs">文章全体</span>
+                            <span class="arrow text-xl">&rarr;</span>
+                             <span class="p-2 bg-gray-800 rounded">文章全体</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="promise">
+                <h2 class="text-3xl font-bold text-center mb-8">Diffusionモデルが拓く可能性</h2>
+                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    <div class="card rounded-2xl shadow-lg p-6 text-center transform hover:scale-105 transition-transform">
+                        <p class="text-5xl mb-3">🚀</p>
+                        <h3 class="font-bold text-lg text-cyan-300">高速な生成</h3>
+                        <p class="text-sm text-gray-400">並列処理で文章全体を更新するため、理論上、生成が非常に速い。</p>
+                    </div>
+                    <div class="card rounded-2xl shadow-lg p-6 text-center transform hover:scale-105 transition-transform">
+                        <p class="text-5xl mb-3">🌍</p>
+                        <h3 class="font-bold text-lg text-cyan-300">全体的な一貫性</h3>
+                        <p class="text-sm text-gray-400">最初から文章全体の構造を考慮するため、文脈の一貫性が高い。</p>
+                    </div>
+                    <div class="card rounded-2xl shadow-lg p-6 text-center transform hover:scale-105 transition-transform">
+                        <p class="text-5xl mb-3">🤸</p>
+                        <h3 class="font-bold text-lg text-cyan-300">推論の柔軟性</h3>
+                        <p class="text-sm text-gray-400">特定の推論パターン（逆転の呪い等）に強い可能性を持つ。</p>
+                    </div>
+                 </div>
+            </section>
+        </main>
+        
+        <footer class="text-center mt-20 md:mt-28 py-8 border-t border-gray-800">
+            <p class="text-gray-500">LLMの進化は止まらない。Attentionの革新から、Diffusionによる新たな地平へ。</p>
+        </footer>
+
+    </div>
+
+    <script>
+        const FONT_COLOR = '#f0f8ff';
+        const GRID_COLOR = '#003554';
+        const PALETTE = {
+            blue: '#00A6FB',
+            darkBlue: '#0582CA',
+        };
+
+        Chart.defaults.font.family = "'Inter', 'Noto Sans JP', sans-serif";
+        Chart.defaults.color = FONT_COLOR;
+
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            }
+            return label;
+        };
+        
+        const wrapLabel = (label, maxLength = 16) => {
+            if (label.length <= maxLength) return label;
+            const words = label.split(' ');
+            let lines = [];
+            let currentLine = '';
+            for (const word of words) {
+                if ((currentLine + ' ' + word).trim().length > maxLength) {
+                    lines.push(currentLine.trim());
+                    currentLine = word;
+                } else {
+                    currentLine = (currentLine + ' ' + word).trim();
+                }
+            }
+            if (currentLine) lines.push(currentLine.trim());
+            return lines;
+        }
+
+        const complexityChartCtx = document.getElementById('complexityChart').getContext('2d');
+        new Chart(complexityChartCtx, {
+            type: 'bar',
+            data: {
+                labels: ['1x', '2x', '4x', '8x'],
+                datasets: [{
+                    label: '計算コスト',
+                    data: [1, 4, 16, 64],
+                    backgroundColor: PALETTE.darkBlue,
+                    borderColor: PALETTE.blue,
+                    borderWidth: 2,
+                    borderRadius: 4,
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                    title: {
+                        display: true,
+                        text: '入力長に対する計算コスト (O(n²))',
+                        color: FONT_COLOR,
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: tooltipTitleCallback
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: '入力系列長 (n)',
+                            color: FONT_COLOR,
+                        },
+                        grid: {
+                            color: GRID_COLOR,
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: '計算コスト',
+                            color: FONT_COLOR,
+                        },
+                        grid: {
+                            color: GRID_COLOR,
+                        },
+                         type: 'logarithmic',
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
