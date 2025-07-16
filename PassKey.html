@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>パスキー入門：パスワードのない未来へ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <!--
+    Narrative Plan:
+    1. Hook: Start with the universal problem of passwords.
+    2. Introduction: Introduce Passkeys as the solution.
+    3. How it Works (The Core): Visualize the two-key system (registration and login) using a clear, non-technical flowchart.
+    4. Key Benefits: Use strong visuals and large numbers to highlight the main advantages (Security, Convenience).
+    5. Comparison: A direct visual comparison between Passwords and Passkeys.
+    6. Future Outlook: Conclude with the growing adoption and call to action.
+
+    Visualization Choices:
+    - Password Problems (Section 1): Goal: Inform. Visualization: List with icons (Unicode characters). Justification: Clearly lists common pain points in an easy-to-digest format. NO SVG used.
+    - How Passkeys Work (Section 3): Goal: Organize. Visualization: Flow Chart using structured HTML/CSS with Tailwind. Justification: Best way to show a process without using prohibited Mermaid/SVG. Clearly breaks down the registration and login flows. NO SVG used.
+    - Phishing Attack Vulnerability (Section 4): Goal: Compare. Visualization: Donut Chart (Chart.js). Justification: Effectively shows a simple, powerful proportion about security enhancement. Rendered on Canvas. NO SVG used.
+    - Login Speed Comparison (Section 4): Goal: Compare. Visualization: Bar Chart (Chart.js). Justification: Directly compares the time/effort for two different methods. Rendered on Canvas. NO SVG used.
+    - Password vs. Passkey Table (Section 5): Goal: Compare. Visualization: Table (HTML/CSS). Justification: A direct, feature-by-feature comparison is best handled by a clear table for easy reference. NO SVG used.
+
+    Color Palette Chosen: Brilliant Blues (#003f5c, #58508d, #bc5090, #ff6361, #ffa600) for a professional, tech-oriented, yet vibrant feel.
+
+    Mermaid JS was not used. SVG was not used.
+    -->
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        .card {
+            background-color: white;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.15);
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .flow-arrow::after {
+            content: '▼';
+            font-size: 2rem;
+            color: #003f5c;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            display: block;
+            text-align: center;
+        }
+        .flow-step {
+            border: 2px solid;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center my-12">
+            <h1 class="text-5xl md:text-7xl font-black text-shadow" style="color: #003f5c;">パスキー入門</h1>
+            <p class="text-xl md:text-2xl mt-4 text-gray-600">パスワードの時代は、もう終わり。</p>
+        </header>
+
+        <section id="problem" class="mb-20">
+            <div class="card max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold text-center mb-6" style="color: #bc5090;">「またパスワード？」その悩み、よく分かります。</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                    <div class="p-4 bg-gray-50 rounded-xl">
+                        <div class="text-5xl mb-3">🤯</div>
+                        <h3 class="text-xl font-bold">作成・記憶の負担</h3>
+                        <p class="text-gray-600 mt-2">サイトごとに違う複雑なパスワードを考え、覚えておくのは大変です。</p>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-xl">
+                        <div class="text-5xl mb-3">🎣</div>
+                        <h3 class="text-xl font-bold">フィッシング詐欺</h3>
+                        <p class="text-gray-600 mt-2">偽サイトにだまされて入力してしまい、盗まれる危険性があります。</p>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-xl">
+                        <div class="text-5xl mb-3"> Leak</div>
+                        <h3 class="text-xl font-bold">サーバーからの漏洩</h3>
+                        <p class="text-gray-600 mt-2">サービス側から情報が漏れると、他のサイトでも悪用される恐れがあります。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="solution" class="mb-20 text-center">
+             <h2 class="text-4xl font-black mb-4" style="color: #003f5c;">解決策は <span style="color: #ff6361;">パスキー</span> です。</h2>
+            <p class="text-lg max-w-3xl mx-auto text-gray-700">
+                パスキーは、あなたのデバイス（スマホやPC）を「鍵」そのものにする、新しい認証技術です。指紋や顔認証で、パスワードを入力することなく、安全かつ一瞬でログインが完了します。
+            </p>
+        </section>
+
+        <section id="how-it-works" class="mb-20">
+            <h2 class="text-3xl font-bold text-center mb-10" style="color: #58508d;">パスキーの仕組み：2つの鍵があなたを守る</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div class="card">
+                    <h3 class="text-2xl font-bold text-center mb-6">1. 最初の登録</h3>
+                    <div class="flex flex-col items-center">
+                        <div class="flow-step w-full" style="border-color: #ff6361;">
+                            <div class="text-4xl">👤</div>
+                            <p class="font-bold mt-2">ユーザーが登録を開始</p>
+                        </div>
+                        <div class="flow-arrow"></div>
+                        <div class="flow-step w-full" style="border-color: #ff6361;">
+                             <p class="font-bold">デバイス内で2つの鍵を生成</p>
+                            <div class="flex justify-around w-full mt-2">
+                                <span class="text-2xl" title="秘密鍵">🔑</span>
+                                <span class="text-2xl" title="公開鍵">🔐</span>
+                            </div>
+                        </div>
+                        <div class="flow-arrow"></div>
+                        <div class="flex w-full gap-4">
+                            <div class="flow-step flex-1" style="border-color: #ff6361;">
+                                <div class="text-4xl">🔑</div>
+                                <p class="font-bold mt-2">秘密鍵</p>
+                                <p class="text-sm">デバイス内に厳重保管</p>
+                            </div>
+                            <div class="flow-step flex-1" style="border-color: #003f5c;">
+                                <div class="text-4xl">🔐</div>
+                                <p class="font-bold mt-2">公開鍵</p>
+                                <p class="text-sm">サービス側に登録</p>
+                            </div>
+                        </div>
+                         <p class="text-center mt-4 text-gray-600">あなたの一番大事な「秘密鍵」はデバイスから決して出ません。サービス側はペアとなる「公開鍵」だけを保管します。</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 class="text-2xl font-bold text-center mb-6">2. ログインの流れ</h3>
+                    <div class="flex flex-col items-center">
+                        <div class="flow-step w-full" style="border-color: #003f5c;">
+                             <div class="text-4xl">👆</div>
+                             <p class="font-bold mt-2">指紋や顔で認証</p>
+                             <p class="text-sm">パスワード入力は不要</p>
+                        </div>
+                        <div class="flow-arrow"></div>
+                        <div class="flow-step w-full" style="border-color: #003f5c;">
+                             <div class="text-4xl">✍️</div>
+                             <p class="font-bold mt-2">秘密鍵が電子署名</p>
+                             <p class="text-sm">デバイス内で安全に処理</p>
+                        </div>
+                        <div class="flow-arrow"></div>
+                        <div class="flow-step w-full" style="border-color: #003f5c;">
+                             <div class="text-4xl">✅</div>
+                             <p class="font-bold mt-2">公開鍵で照合し、成功</p>
+                             <p class="text-sm">サービス側で本人確認完了</p>
+                        </div>
+                        <p class="text-center mt-4 text-gray-600">秘密の情報を送受信しないため、途中で盗まれる心配がありません。安全なやり取りが自動的に行われます。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="benefits" class="mb-20">
+            <h2 class="text-3xl font-bold text-center mb-10" style="color: #58508d;">パスキーがもたらす絶大なメリット</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="card">
+                    <h3 class="text-2xl font-bold text-center mb-4">鉄壁のセキュリティ</h3>
+                    <p class="text-center text-gray-600 mb-6">パスキーは、従来のパスワード認証における脆弱性の多くを根本的に解決します。</p>
+                    <div class="chart-container">
+                        <canvas id="securityChart"></canvas>
+                    </div>
+                    <p class="text-center mt-4 text-gray-600 font-semibold">フィッシング詐欺に対する耐性が劇的に向上します。</p>
+                </div>
+                <div class="card">
+                    <h3 class="text-2xl font-bold text-center mb-4">圧倒的な利便性</h3>
+                     <p class="text-center text-gray-600 mb-6">毎日のログイン作業が、驚くほど速く、そして簡単になります。</p>
+                    <div class="chart-container">
+                        <canvas id="speedChart"></canvas>
+                    </div>
+                     <p class="text-center mt-4 text-gray-600 font-semibold">パスワードを探したり入力したりする手間がなくなります。</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="comparison" class="mb-20">
+             <h2 class="text-3xl font-bold text-center mb-10" style="color: #58508d;">パスワード vs パスキー</h2>
+            <div class="card max-w-4xl mx-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr>
+                            <th class="border-b-2 border-gray-200 p-4 text-lg"></th>
+                            <th class="border-b-2 border-gray-200 p-4 text-lg text-center" style="color: #bc5090;">パスワード</th>
+                            <th class="border-b-2 border-gray-200 p-4 text-lg text-center" style="color: #003f5c;">パスキー</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-gray-100">
+                            <td class="p-4 font-bold">記憶の必要性</td>
+                            <td class="p-4 text-center">必要（非常に面倒）</td>
+                            <td class="p-4 text-center font-bold" style="color: #003f5c;">不要</td>
+                        </tr>
+                        <tr class="border-b border-gray-100">
+                            <td class="p-4 font-bold">フィッシング耐性</td>
+                            <td class="p-4 text-center">低い (脆弱)</td>
+                            <td class="p-4 text-center font-bold" style="color: #003f5c;">非常に高い</td>
+                        </tr>
+                         <tr class="border-b border-gray-100">
+                            <td class="p-4 font-bold">サーバー漏洩リスク</td>
+                            <td class="p-4 text-center">高い (危険)</td>
+                            <td class="p-4 text-center font-bold" style="color: #003f5c;">非常に低い</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-bold">ログイン方法</td>
+                            <td class="p-4 text-center">手入力</td>
+                            <td class="p-4 text-center font-bold" style="color: #003f5c;">生体認証 (指紋/顔)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <footer class="text-center my-12">
+            <h2 class="text-4xl font-black mb-4" style="color: #003f5c;">さあ、パスワードのない未来へ。</h2>
+            <p class="text-lg text-gray-700 max-w-2xl mx-auto">Google, Apple, Microsoftなど、多くのサービスが既に対応を始めています。お使いのサービスで「パスキー」の文字を見かけたら、ぜひ設定してみてください。</p>
+        </footer>
+
+    </div>
+
+    <script>
+        const wrapLabel = (label, maxWidth) => {
+            const words = label.split(' ');
+            let lines = [];
+            let currentLine = '';
+            for (const word of words) {
+                const testLine = currentLine.length > 0 ? `${currentLine} ${word}` : word;
+                if (testLine.length > maxWidth) {
+                    lines.push(currentLine);
+                    currentLine = word;
+                } else {
+                    currentLine = testLine;
+                }
+            }
+            lines.push(currentLine);
+            return lines;
+        };
+
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+              return label.join(' ');
+            } else {
+              return label;
+            }
+        };
+        
+        const sharedChartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        font: {
+                            size: 14,
+                            family: "'Inter', sans-serif"
+                        }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        title: tooltipTitleCallback
+                    },
+                    titleFont: {
+                        size: 16
+                    },
+                    bodyFont: {
+                        size: 14
+                    },
+                    padding: 12,
+                    backgroundColor: 'rgba(0, 63, 92, 0.9)',
+                    titleColor: '#ffffff',
+                    bodyColor: '#ffffff',
+                }
+            }
+        };
+
+        const securityData = {
+            labels: ['パスキーで保護', '従来のパスワードのみ'],
+            datasets: [{
+                label: 'フィッシング攻撃のリスク',
+                data: [99, 1],
+                backgroundColor: ['#003f5c', '#ff6361'],
+                borderColor: '#ffffff',
+                borderWidth: 2,
+            }]
+        };
+
+        const securityCtx = document.getElementById('securityChart').getContext('2d');
+        new Chart(securityCtx, {
+            type: 'doughnut',
+            data: securityData,
+            options: {
+                ...sharedChartOptions,
+                cutout: '70%',
+            }
+        });
+
+        const speedData = {
+            labels: ['パスワード入力', 'パスキー認証 (指紋/顔)'],
+            datasets: [{
+                label: '平均ログイン時間 (秒)',
+                data: [15.5, 1.2],
+                backgroundColor: ['#ff6361', '#003f5c'],
+                borderRadius: 8,
+                barPercentage: 0.6,
+            }]
+        };
+
+        const speedCtx = document.getElementById('speedChart').getContext('2d');
+        new Chart(speedCtx, {
+            type: 'bar',
+            data: speedData,
+            options: {
+                ...sharedChartOptions,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: '秒数'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
