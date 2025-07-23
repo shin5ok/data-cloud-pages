@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>インフォグラフィック：アンコンシャス・バイアスを理解する</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 350px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+                max-height: 400px;
+            }
+        }
+        .flow-arrow::after {
+            content: '▼';
+            font-size: 2rem;
+            color: #FC913A;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .flow-card {
+            border-left: 4px solid #FF4E50;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <header class="bg-white shadow-md sticky top-0 z-10">
+        <div class="container mx-auto px-6 py-4">
+            <h1 class="text-2xl md:text-3xl font-bold text-center" style="color: #FF4E50;">インフォグラフィックで学ぶ：アンコンシャス・バイアス</h1>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <section id="intro" class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">それは、誰の心にも潜んでいる。</h2>
+            <p class="text-lg md:text-xl max-w-3xl mx-auto mb-8">
+                アンコンシャス・バイアス（無意識の偏見）とは、あなた自身も気づいていない「思い込み」のこと。悪意はなくても、この脳の"ショートカット"が、私たちの判断を歪めてしまうことがあります。
+            </p>
+            <div class="bg-white rounded-lg shadow-xl p-8 inline-block">
+                <div class="text-6xl md:text-8xl font-bold" style="color: #FC913A;">99%</div>
+                <p class="text-lg font-bold mt-2">の人が持つと言われる無意識の偏見</p>
+                <p class="text-sm mt-2 text-gray-500">これは特定の調査結果ではなく、誰もが持つ脳機能であることを示す概念的な数字です。</p>
+            </div>
+        </section>
+
+        <section id="types" class="mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-2">日常に潜む、見過ごしがちなバイアス</h2>
+                <p class="text-md md:text-lg text-gray-600">より微妙で、善意から生まれることもある偏見の具体例を見ていきましょう。</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <div class="bg-white rounded-lg shadow-lg p-6 flex flex-col">
+                    <h3 class="text-2xl font-bold mb-4 text-center" style="color: #FF4E50;">1. 性別のバイアス</h3>
+                    <p class="mb-6 text-center flex-grow">「力仕事は男性が」という典型例だけでなく、「育児中の女性には大変だろうから大きな仕事は任せない」といった、良かれと思っての配慮が、実は相手の機会を奪っているケースも含まれます。</p>
+                    <div class="chart-container">
+                        <canvas id="genderBiasChart"></canvas>
+                    </div>
+                    <p class="text-sm text-center mt-4 text-gray-600">このグラフは、同じ「力強い意見」でも、性別によって周囲の受け止め方が変わる傾向を視覚化したものです。</p>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-6 flex flex-col">
+                    <h3 class="text-2xl font-bold mb-4 text-center" style="color: #FC913A;">2. 容姿・年齢のバイアス</h3>
+                    <p class="mb-6 text-center flex-grow">外見の印象に評価が左右されるだけでなく、「まだ若いから」と意見を軽視する「エイジズム」も根深い偏見です。また、良かれと思って集団の中で一人の容姿を褒めたことが、意図せず他のメンバーを傷つけたり、「容姿で人を評価している」というメッセージに受け取られたりするケースもあります。</p>
+                    <div class="chart-container">
+                        <canvas id="appearanceBiasChart"></canvas>
+                    </div>
+                    <p class="text-sm text-center mt-4 text-gray-600">採用時に、能力とは無関係な「容姿」や「年齢」が、無意識に評価へ影響を与えてしまうことを示しています。</p>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-6 flex flex-col">
+                    <h3 class="text-2xl font-bold mb-4 text-center" style="color: #F9D423;">3. 国籍・文化のバイアス</h3>
+                    <p class="mb-6 text-center flex-grow">悪意なく発した「お箸を使うのが上手ですね」という言葉も、相手を"特別"で"異質"な存在として扱っている場合があります。また「日本人だから勤勉」というポジティブな決めつけも、個人へのプレッシャーになり得ます。</p>
+                    <div class="text-center p-4">
+                        <div class="text-4xl mb-4">👤➡️</div>
+                        <p class="font-bold text-lg mb-4">ステレオタイプの押し付け</p>
+                        <div class="flex justify-center flex-wrap gap-x-4 gap-y-2 text-md">
+                            <span class="bg-gray-200 p-2 rounded-full">お箸上手！</span>
+                            <span class="bg-gray-200 p-2 rounded-full">真面目そう</span>
+                            <span class="bg-gray-200 p-2 rounded-full">陽気でしょ？</span>
+                        </div>
+                        <p class="text-sm text-center mt-4 text-gray-600">ピクトグラムは、個人に対して集団のイメージ（ステレオタイプ）を無意識に当てはめてしまう様子を表しています。</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-6 flex flex-col">
+                    <h3 class="text-2xl font-bold mb-4 text-center" style="color: #FF4E50;">4. 所属・学歴のバイアス</h3>
+                    <p class="mb-6 text-center flex-grow">「同じ部署だから」「同じ大学出身だから」という共通点だけで、相手に親近感を覚え、無意識に能力を高く評価してしまうことがあります。これは「内集団バイアス」と呼ばれ、公平な評価を妨げます。</p>
+                    <div class="chart-container">
+                        <canvas id="affinityBiasChart"></canvas>
+                    </div>
+                    <p class="text-sm text-center mt-4 text-gray-600">自分と共通点がある人（内集団）と、そうでない人（外集団）とで、無意識に評価に差をつけてしまう傾向を示しています。</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="solution" class="mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-2">偏見と向き合う5つのステップ</h2>
+                <p class="text-md md:text-lg text-gray-600">バイアスをゼロにはできません。しかし、その影響を減らすための行動はできます。</p>
+            </div>
+
+            <div class="flex flex-col items-center space-y-4">
+                <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl flow-card">
+                    <p class="text-xl font-bold" style="color: #FF4E50;">Step 1: 存在を認める</p>
+                    <p>まず「自分にも無意識の偏見がある」と受け入れることがスタートラインです。</p>
+                </div>
+                <div class="flow-arrow"></div>
+                <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl flow-card">
+                    <p class="text-xl font-bold" style="color: #FF4E50;">Step 2: 自分の偏見に気づく</p>
+                    <p>どのような時に「〜だからこうだ」と決めつけているか、自分の思考の癖を振り返ります。</p>
+                </div>
+                <div class="flow-arrow"></div>
+                <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl flow-card">
+                    <p class="text-xl font-bold" style="color: #FF4E50;">Step 3: 判断を一度保留する</p>
+                    <p>「本当にそうか？」「もし相手が別人だったら？」と一呼吸おいて考えます。</p>
+                </div>
+                <div class="flow-arrow"></div>
+                <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl flow-card">
+                    <p class="text-xl font-bold" style="color: #FF4E50;">Step 4: 多様な価値観に触れる</p>
+                    <p>自分とは違う背景を持つ人々と交流し、固定観念をアップデートします。</p>
+                </div>
+                 <div class="flow-arrow"></div>
+                <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl flow-card">
+                    <p class="text-xl font-bold" style="color: #FF4E50;">Step 5: 仕組みでカバーする</p>
+                    <p>採用時に名前を隠すなど、個人の感覚に頼らないルールを作ることも有効です。</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white text-center p-6">
+        <p>アンコンシャス・バイアスを理解し、より公平な社会を目指しましょう。</p>
+    </footer>
+
+    <script>
+        const FONT_COLOR = '#374151';
+        const GRID_COLOR = '#e5e7eb';
+
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            }
+            return label;
+        };
+
+        const commonChartOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: FONT_COLOR,
+                        font: { size: 14 }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        title: tooltipTitleCallback
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { color: FONT_COLOR },
+                    grid: { color: GRID_COLOR }
+                },
+                x: {
+                    ticks: { color: FONT_COLOR },
+                    grid: { color: 'transparent' }
+                }
+            }
+        };
+        
+        function wrapLabel(label, maxWidth) {
+            const words = label.split(' ');
+            let lines = [];
+            let currentLine = '';
+            for (const word of words) {
+                if ((currentLine + word).length > maxWidth) {
+                    lines.push(currentLine.trim());
+                    currentLine = '';
+                }
+                currentLine += word + ' ';
+            }
+            lines.push(currentLine.trim());
+            return lines.filter(line => line.length > 0);
+        }
+
+        const genderBiasCtx = document.getElementById('genderBiasChart').getContext('2d');
+        new Chart(genderBiasCtx, {
+            type: 'bar',
+            data: {
+                labels: ['男性の発言', '女性の発言'],
+                datasets: [{
+                    label: '周囲の評価（概念）',
+                    data: [85, 40],
+                    backgroundColor: ['#FC913A', '#FF4E50'],
+                    borderColor: ['#FC913A', '#FF4E50'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                ...commonChartOptions,
+                plugins: {
+                    ...commonChartOptions.plugins,
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        ...commonChartOptions.scales.y,
+                        title: {
+                            display: true,
+                            text: 'ポジティブな評価（点）'
+                        }
+                    }
+                }
+            }
+        });
+
+        const appearanceBiasCtx = document.getElementById('appearanceBiasChart').getContext('2d');
+        new Chart(appearanceBiasCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['能力以外の要因が影響', '純粋な能力評価'],
+                datasets: [{
+                    label: '評価への影響度',
+                    data: [78, 22],
+                    backgroundColor: ['#FF4E50', '#F9D423'],
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            color: FONT_COLOR,
+                            font: { size: 14 }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: tooltipTitleCallback
+                        }
+                    }
+                }
+            }
+        });
+
+        const affinityBiasCtx = document.getElementById('affinityBiasChart').getContext('2d');
+        new Chart(affinityBiasCtx, {
+            type: 'bar',
+            data: {
+                labels: ['同じチームの人', '他のチームの人'],
+                datasets: [{
+                    label: '無意識の評価点',
+                    data: [80, 65],
+                    backgroundColor: ['#FC913A', '#F9D423'],
+                    borderColor: ['#FC913A', '#F9D423'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                ...commonChartOptions,
+                plugins: {
+                    ...commonChartOptions.plugins,
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        ...commonChartOptions.scales.y,
+                        title: {
+                            display: true,
+                            text: '親近感による評価'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+```
+
