@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT企業のコアコンピタンス インフォグラフィック</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: #F0F4F8;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .flowchart-item::after {
+            content: '▼';
+            position: absolute;
+            bottom: -28px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            color: #0A9396;
+        }
+        .flowchart-item:last-child::after {
+            content: '';
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center mb-16">
+            <h1 class="text-4xl md:text-6xl font-bold text-[#005F73] mb-4">IT企業の「北極星」を見つける</h1>
+            <p class="text-lg md:text-xl text-[#0A9396]">持続的成長を牽引するコアコンピタンスの探求</p>
+        </header>
+
+        <section id="introduction" class="mb-20">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-3xl font-bold text-[#005F73] mb-6">なぜ今、コアコンピタンスが重要なのか？</h2>
+                <p class="text-lg leading-relaxed mb-8">
+                    技術革新、顧客ニーズの多様化、そしてグローバルな競争。変化の激しいIT業界で企業が生き残り、成長し続けるためには、自社の進むべき道を示す「羅針盤」が必要です。それが、他社には真似できない、企業競争力の中核となる「コアコンピタンス」なのです。
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-[#EE9B00]">
+                        <p class="text-5xl mb-4">🚀</p>
+                        <h3 class="text-xl font-bold text-[#005F73] mb-2">市場環境の激変</h3>
+                        <p class="text-gray-600">AIやブロックチェーンなど、次々と生まれる新技術がゲームのルールを変えています。</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-[#EE9B00]">
+                        <p class="text-5xl mb-4">💡</p>
+                        <h3 class="text-xl font-bold text-[#005F73] mb-2">顧客ニーズの高度化</h3>
+                        <p class="text-gray-600">ユーザーは単なる機能ではなく、優れた体験価値を求めています。</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-[#EE9B00]">
+                        <p class="text-5xl mb-4">🌍</p>
+                        <h3 class="text-xl font-bold text-[#005F73] mb-2">グローバル競争</h3>
+                        <p class="text-gray-600">世界の隅々から、新たな競合が絶えず出現しています。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="definition" class="mb-20">
+            <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12">
+                <div class="max-w-3xl mx-auto text-center">
+                    <h2 class="text-3xl font-bold text-[#005F73] mb-6">それは単なる「強み」ではない</h2>
+                    <p class="text-lg leading-relaxed mb-8">
+                        コアコンピタンスとは、企業が持つスキルや技術の中でも、顧客に本質的な価値を提供し、競合が容易に模倣できず、さらに将来の多角的な事業展開にも繋がる、特別な能力の集合体を指します。
+                    </p>
+                    <div class="bg-[#F0F4F8] p-6 rounded-lg text-left inline-block">
+                        <p class="font-bold text-[#005F73]">強み (Strength):</p>
+                        <p>開発スピードが速い、優秀なエンジニアが多いなど、企業が得意とすること。</p>
+                        <hr class="my-3 border-gray-300">
+                        <p class="font-bold text-[#EE9B00]">コアコンピタンス (Core Competence):</p>
+                        <p>特定のアルゴリズムに関する圧倒的な技術力など、事業の中核となる模倣困難な強み。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="conditions" class="mb-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-[#005F73] mb-4">真のコアコンピタンスを構成する3つの条件</h2>
+                <p class="text-lg text-gray-700 max-w-3xl mx-auto">ある能力がコアコンピタンスと呼ばれるためには、これら3つの条件をすべて満たす必要があります。</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-lg text-center transform hover:scale-105 transition-transform">
+                    <div class="mx-auto bg-[#94D2BD] rounded-full w-24 h-24 flex items-center justify-center mb-4">
+                        <span class="text-5xl">💎</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-[#005F73] mb-3">顧客価値</h3>
+                    <p class="text-gray-600">顧客に「この会社でなければ」と思わせるほどの大きな価値や便益をもたらす力。</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-lg text-center transform hover:scale-105 transition-transform">
+                    <div class="mx-auto bg-[#E9D8A6] rounded-full w-24 h-24 flex items-center justify-center mb-4">
+                        <span class="text-5xl">🛡️</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-[#005F73] mb-3">模倣困難性</h3>
+                    <p class="text-gray-600">技術の複雑さ、独自の文化、経験の蓄積など、競合他社が簡単に真似できない障壁。</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-lg text-center transform hover:scale-105 transition-transform">
+                    <div class="mx-auto bg-[#0A9396] rounded-full w-24 h-24 flex items-center justify-center mb-4">
+                        <span class="text-5xl text-white">🌿</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-[#005F73] mb-3">応用可能性</h3>
+                    <p class="text-gray-600">一つの製品や市場に留まらず、将来の多様な事業展開の基盤となる力。</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="examples" class="mb-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-[#005F73] mb-4">IT業界におけるコアコンピタンスの類型</h2>
+                <p class="text-lg text-gray-700 max-w-3xl mx-auto">成功している企業は、明確なコアコンピタンスを持っています。これはその代表的な類型と、それがいかに重要かを示しています。</p>
+            </div>
+            <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12">
+                <div class="chart-container">
+                    <canvas id="competenceBarChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="process" class="mb-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-[#005F73] mb-4">自社のコアコンピタンスを見つける5ステップ</h2>
+                <p class="text-lg text-gray-700 max-w-3xl mx-auto">コアコンピタンスは発見し、定義し、そして組織全体で育んでいくものです。この5つのステップがその旅の道標となります。</p>
+            </div>
+            <div class="relative flex flex-col items-center space-y-16">
+                <div class="flowchart-item relative w-full md:w-3/4 lg:w-1/2 bg-white p-6 rounded-xl shadow-lg border-l-8 border-[#0A9396]">
+                    <h3 class="text-xl font-bold text-[#005F73] mb-2"><span class="text-[#0A9396] mr-2">1.</span>強みの洗い出し</h3>
+                    <p class="text-gray-600">技術、人材、組織、顧客基盤など、自社が持つあらゆる「強み」を客観的にリストアップします。</p>
+                </div>
+                <div class="flowchart-item relative w-full md:w-3/4 lg:w-1/2 bg-white p-6 rounded-xl shadow-lg border-l-8 border-[#0A9396]">
+                    <h3 class="text-xl font-bold text-[#005F73] mb-2"><span class="text-[#0A9396] mr-2">2.</span>3つの条件で絞り込み</h3>
+                    <p class="text-gray-600">洗い出した強みを「顧客価値」「模倣困難性」「応用可能性」のフィルターにかけ、候補を厳選します。</p>
+                </div>
+                <div class="flowchart-item relative w-full md:w-3/4 lg:w-1/2 bg-white p-6 rounded-xl shadow-lg border-l-8 border-[#0A9396]">
+                    <h3 class="text-xl font-bold text-[#005F73] mb-2"><span class="text-[#0A9396] mr-2">3.</span>提供価値の再定義</h3>
+                    <p class="text-gray-600">候補となった強みが、顧客にとってどのような「本質的価値」を生んでいるのかを言語化します。</p>
+                </div>
+                <div class="flowchart-item relative w-full md:w-3/4 lg:w-1/2 bg-white p-6 rounded-xl shadow-lg border-l-8 border-[#0A9396]">
+                    <h3 class="text-xl font-bold text-[#005F73] mb-2"><span class="text-[#0A9396] mr-2">4.</span>将来の事業展開を構想</h3>
+                    <p class="text-gray-600">そのコアコンピタンスを軸に、どのような新市場や新製品に進出できるかを具体的に描きます。</p>
+                </div>
+                <div class="flowchart-item relative w-full md:w-3/4 lg:w-1/2 bg-white p-6 rounded-xl shadow-lg border-l-8 border-[#EE9B00]">
+                    <h3 class="text-xl font-bold text-[#005F73] mb-2"><span class="text-[#EE9B00] mr-2">5.</span>定義と社内浸透</h3>
+                    <p class="text-gray-600">簡潔で力強い言葉で定義し、経営戦略から日々の業務まで、あらゆる活動の判断基準とします。</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center mt-20 pt-10 border-t border-gray-300">
+            <h2 class="text-3xl font-bold text-[#005F73] mb-4">さあ、自社の「真の強み」を見つける旅を始めましょう。</h2>
+            <p class="text-lg text-gray-600">コアコンピタンスは一度見つけて終わりではありません。市場と共に進化させ続けることが、持続的な成功の鍵です。</p>
+        </footer>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const wrapLabel = (str, maxWidth) => {
+                if (str.length <= maxWidth) {
+                    return str;
+                }
+                const words = str.split('');
+                const lines = [];
+                let currentLine = '';
+                words.forEach(word => {
+                    if ((currentLine + word).length > maxWidth) {
+                        lines.push(currentLine);
+                        currentLine = '';
+                    }
+                    currentLine += word;
+                });
+                lines.push(currentLine);
+                return lines;
+            };
+
+            const tooltipConfig = {
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                if (Array.isArray(label)) {
+                                    return label.join('');
+                                } else {
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+            
+            const competenceBarCtx = document.getElementById('competenceBarChart');
+            if(competenceBarCtx) {
+                new Chart(competenceBarCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: [
+                            wrapLabel('技術・開発力 (HW/SW統合)', 16),
+                            wrapLabel('データ活用能力 (最適化)', 16),
+                            wrapLabel('UX/UIデザイン (直感性)', 16),
+                            wrapLabel('特定ドメイン知識 (業務理解)', 16),
+                            wrapLabel('プラットフォーム (エコシステム)', 16),
+                            wrapLabel('高速な改善サイクル (アジャイル)', 16)
+                        ],
+                        datasets: [{
+                            label: 'コアコンピタンスとしての重要度',
+                            data: [92, 88, 85, 82, 95, 80],
+                            backgroundColor: [
+                                'rgba(10, 147, 150, 0.7)',
+                                'rgba(148, 210, 189, 0.7)',
+                                'rgba(233, 216, 166, 0.7)',
+                                'rgba(238, 155, 0, 0.7)',
+                                'rgba(0, 95, 115, 0.7)',
+                                'rgba(10, 147, 150, 0.5)'
+                            ],
+                            borderColor: [
+                                '#0A9396',
+                                '#94D2BD',
+                                '#E9D8A6',
+                                '#EE9B00',
+                                '#005F73',
+                                '#0A9396'
+                            ],
+                            borderWidth: 2,
+                            borderRadius: 5
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        indexAxis: 'y',
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: '#E0E0E0'
+                                },
+                                ticks: {
+                                    color: '#333'
+                                }
+                            },
+                            y: {
+                                grid: {
+                                    display: false
+                                },
+                                ticks: {
+                                    color: '#333',
+                                    font: {
+                                        size: 12
+                                    }
+                                }
+                            }
+                        },
+                        plugins: {
+                            ...tooltipConfig.plugins,
+                            legend: {
+                                display: false
+                            },
+                             title: {
+                                display: true,
+                                text: 'IT業界におけるコアコンピタンスの類型別重要度',
+                                font: { size: 18, weight: 'bold', family: "'Inter', 'Noto Sans JP', sans-serif" },
+                                color: '#005F73',
+                                padding: { top: 10, bottom: 20 }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
