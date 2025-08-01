@@ -3,26 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IT企業のコアコンピタンス戦略資料</title>
+    <title>IT企業のコアコンピタンス戦略資料 (Pager付き)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         html, body {
-            scroll-snap-type: y mandatory;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Prevent body scrollbar */
             font-family: 'Noto Sans JP', sans-serif;
             background-color: #f3f4f6;
         }
+        main {
+            scroll-snap-type: y mandatory;
+            overflow-y: scroll;
+            height: 100vh;
+        }
         .slide {
             scroll-snap-align: start;
-            min-height: 100vh;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 4rem 2rem;
-            border-bottom: 1px solid #e5e7eb;
             background-color: white;
+            position: relative;
         }
         .slide-content {
             width: 100%;
@@ -30,12 +37,6 @@
         }
         h1, h2, h3 {
             font-weight: 700;
-        }
-        ul {
-            list-style-position: inside;
-        }
-        li {
-            margin-bottom: 0.75rem;
         }
         blockquote {
             border-left: 4px solid #0A9396;
@@ -58,201 +59,326 @@
             background-color: #f9fafb;
             font-weight: 500;
         }
+        .pager {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 10;
+        }
+        .pager-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #ccc;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .pager-dot.active {
+            background-color: #005F73;
+            transform: scale(1.2);
+        }
+        .nav-button {
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            background-color: rgba(0, 95, 115, 0.7);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: opacity 0.3s;
+            opacity: 0.7;
+        }
+        .nav-button:hover {
+            opacity: 1;
+        }
+        #prev-btn {
+            top: 20px;
+        }
+        #next-btn {
+            bottom: 20px;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Slide 1: Title -->
-    <div class="slide bg-[#005F73] text-white">
-        <div class="slide-content text-center">
-            <h1 class="text-5xl md:text-6xl mb-4">IT企業の持続的成長を支える「コアコンピタンス」</h1>
-            <h3 class="text-2xl md:text-3xl opacity-80">～定義から策定プロセスまで～</h3>
-        </div>
-    </div>
+    <div id="pager" class="pager"></div>
+    <div id="prev-btn" class="nav-button" title="前のスライドへ">▲</div>
+    <div id="next-btn" class="nav-button" title="次のスライドへ">▼</div>
 
-    <!-- Slide 2: Why Core Competence? -->
-    <div class="slide">
-        <div class="slide-content">
-            <h2 class="text-4xl text-[#005F73] mb-8 border-b-4 border-[#0A9396] pb-2">1. なぜ今、コアコンピタンスなのか？</h2>
-            <p class="text-xl mb-8">変化の激しいIT業界において、企業が持続的に成長するためには、自社の「拠り所」となる競争力の源泉が不可欠です。</p>
-            <div class="grid md:grid-cols-2 gap-8 text-lg">
-                <div>
-                    <h3 class="text-2xl font-bold mb-4 text-[#005F73]">市場環境の激変</h3>
-                    <ul class="list-disc pl-4 space-y-3">
-                        <li>次々と生まれる新しい技術（AI、ブロックチェーンなど）</li>
-                        <li>多様化・高度化する顧客ニーズ</li>
-                        <li>グローバルな競争の激化</li>
-                    </ul>
+    <main id="main-container">
+        <!-- Slide 1: Title -->
+        <section class="slide bg-[#005F73] text-white">
+            <div class="slide-content text-center">
+                <h1 class="text-5xl md:text-6xl mb-4">IT企業の持続的成長を支える「コアコンピタンス」</h1>
+                <h3 class="text-2xl md:text-3xl opacity-80">～定義から策定プロセスまで～</h3>
+            </div>
+        </section>
+
+        <!-- Slide 2: Why Core Competence? -->
+        <section class="slide">
+            <div class="slide-content">
+                <h2 class="text-4xl text-[#005F73] mb-8 border-b-4 border-[#0A9396] pb-2">1. なぜ今、コアコンピタンスなのか？</h2>
+                <p class="text-xl mb-8">変化の激しいIT業界において、企業が持続的に成長するためには、自社の「拠り所」となる競争力の源泉が不可欠です。</p>
+                <div class="grid md:grid-cols-2 gap-8 text-lg">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4 text-[#005F73]">市場環境の激変</h3>
+                        <ul class="list-disc pl-4 space-y-3">
+                            <li>次々と生まれる新しい技術（AI、ブロックチェーンなど）</li>
+                            <li>多様化・高度化する顧客ニーズ</li>
+                            <li>グローバルな競争の激化</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4 text-[#005F73]">競争優位性の構築</h3>
+                        <ul class="list-disc pl-4 space-y-3">
+                            <li>短期的な成功ではなく、長期的な優位性をどう築くか？</li>
+                            <li>自社の進むべき方向を示す「羅針盤」が必要</li>
+                        </ul>
+                    </div>
                 </div>
-                <div>
-                    <h3 class="text-2xl font-bold mb-4 text-[#005F73]">競争優位性の構築</h3>
-                    <ul class="list-disc pl-4 space-y-3">
-                        <li>短期的な成功ではなく、長期的な優位性をどう築くか？</li>
-                        <li>自社の進むべき方向を示す「羅針盤」が必要</li>
-                    </ul>
+                <p class="mt-12 text-center text-xl bg-gray-100 p-6 rounded-lg"><strong>コアコンピタンス</strong>は、この羅針盤の役割を果たし、企業の意思決定や戦略の土台となります。</p>
+            </div>
+        </section>
+
+        <!-- Slide 3: What is Core Competence? -->
+        <section class="slide">
+            <div class="slide-content">
+                <h2 class="text-4xl text-[#005F73] mb-8 border-b-4 border-[#0A9396] pb-2">2. コアコンピタンスとは？</h2>
+                <p class="text-xl mb-8">コアコンピタンスとは、単なる「強み」ではありません。</p>
+                <blockquote class="text-xl">
+                    <p>「顧客に特定の利益をもたらす、企業内部に秘められた独自のスキルや技術の集合体」</p>
+                    <footer class="text-right mt-2 text-base not-italic text-gray-500">（ゲイリー・ハメル、C.K.プラハラード提唱）</footer>
+                </blockquote>
+            </div>
+        </section>
+        
+        <!-- Slide 4: Difference -->
+        <section class="slide">
+            <div class="slide-content">
+                <h2 class="text-4xl text-[#005F73] mb-8 border-b-4 border-[#0A9396] pb-2">「強み」と「コアコンピタンス」の違い</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>強み (Strength)</th>
+                            <th>コアコンピタンス (Core Competence)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>性質</strong></td>
+                            <td>企業が得意とすること</td>
+                            <td>競合他社が<strong>簡単に真似できない</strong>、事業の中核となる強み</td>
+                        </tr>
+                        <tr>
+                            <td><strong>焦点</strong></td>
+                            <td>自社内部</td>
+                            <td>顧客への価値提供と市場での競争力</td>
+                        </tr>
+                        <tr>
+                            <td><strong>例（IT企業）</strong></td>
+                            <td>・開発スピードが速い<br>・優秀なエンジニアが多い</td>
+                            <td>・特定のアルゴリズムに関する圧倒的な技術力<br>・ユーザーの潜在ニーズを捉えるUI/UX設計能力</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Slide 5: 3 Conditions -->
+        <section class="slide">
+            <div class="slide-content">
+                <h2 class="text-4xl text-[#005F73] mb-8 border-b-4 border-[#0A9396] pb-2">3. コアコンピタンスを構成する3つの条件</h2>
+                <p class="text-xl mb-8 text-center">ある能力がコアコンピタンスであるためには、以下の3つの条件をすべて満たす必要があります。</p>
+                <div class="w-full h-32 flex items-center justify-center bg-gray-100 rounded-lg my-8">
+                    <p class="text-gray-500">[図解イメージ：3つの円が重なり、中央が「コアコンピタンス」となる]</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8 text-lg">
+                    <div class="p-6 bg-gray-50 rounded-lg">
+                        <h3 class="text-2xl font-bold mb-3 text-[#005F73]">① 顧客価値</h3>
+                        <ul class="list-disc pl-4 space-y-2">
+                            <li>顧客に大きな価値や便益をもたらすか？</li>
+                            <li>顧客は「この会社でなければ」と感じるか。</li>
+                        </ul>
+                    </div>
+                    <div class="p-6 bg-gray-50 rounded-lg">
+                        <h3 class="text-2xl font-bold mb-3 text-[#005F73]">② 模倣困難性</h3>
+                        <ul class="list-disc pl-4 space-y-2">
+                            <li>競合他社が簡単に真似できないか？</li>
+                            <li>技術の複雑さ、独自の文化、経験の蓄積など。</li>
+                        </ul>
+                    </div>
+                    <div class="p-6 bg-gray-50 rounded-lg">
+                        <h3 class="text-2xl font-bold mb-3 text-[#005F73]">③ 応用可能性</h3>
+                        <ul class="list-disc pl-4 space-y-2">
+                            <li>複数の製品や新しい市場に応用できるか？</li>
+                            <li>将来の事業展開の基盤となるか。</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-            <p class="mt-12 text-center text-xl bg-gray-100 p-6 rounded-lg"><strong>コアコンピタンス</strong>は、この羅針盤の役割を果たし、企業の意思決定や戦略の土台となります。</p>
-        </div>
-    </div>
+        </section>
 
-    <!-- Slide 3: What is Core Competence? -->
-    <div class="slide">
-        <div class="slide-content">
-            <h2 class="text-4xl text-[#005F73] mb-8 border-b-4 border-[#0A9396] pb-2">2. コアコンピタンスとは？</h2>
-            <p class="text-xl mb-8">コアコンピタンスとは、単なる「強み」ではありません。</p>
-            <blockquote class="text-xl">
-                <p>「顧客に特定の利益をもたらす、企業内部に秘められた独自のスキルや技術の集合体」</p>
-                <footer class="text-right mt-2 text-base not-italic text-gray-500">（ゲイリー・ハメル、C.K.プラハラード提唱）</footer>
-            </blockquote>
-            <h3 class="text-2xl font-bold mt-12 mb-4 text-[#005F73]">「強み」と「コアコンピタンス」の違い</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>強み (Strength)</th>
-                        <th>コアコンピタンス (Core Competence)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>性質</strong></td>
-                        <td>企業が得意とすること</td>
-                        <td>競合他社が<strong>簡単に真似できない</strong>、事業の中核となる強み</td>
-                    </tr>
-                    <tr>
-                        <td><strong>焦点</strong></td>
-                        <td>自社内部</td>
-                        <td>顧客への価値提供と市場での競争力</td>
-                    </tr>
-                    <tr>
-                        <td><strong>例（IT企業）</strong></td>
-                        <td>・開発スピードが速い<br>・優秀なエンジニアが多い</td>
-                        <td>・特定のアルゴリズムに関する圧倒的な技術力<br>・ユーザーの潜在ニーズを捉えるUI/UX設計能力</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- Slide 4: 3 Conditions -->
-    <div class="slide">
-        <div class="slide-content">
-            <h2 class="text-4xl text-[#005F73] mb-8 border-b-4 border-[#0A9396] pb-2">3. コアコンピタンスを構成する3つの条件</h2>
-            <p class="text-xl mb-8 text-center">ある能力がコアコンピタンスであるためには、以下の3つの条件をすべて満たす必要があります。</p>
-            <div class="w-full h-48 flex items-center justify-center bg-gray-100 rounded-lg my-8">
-                <p class="text-gray-500">[3つの円が重なり、中央が「コアコンピタンス」となる図のイメージ]</p>
+        <!-- Slide 6: Examples -->
+        <section class="slide">
+            <div class="slide-content">
+                <h2 class="text-4xl text-[#005F73] mb-8 border-b-4 border-[#0A9396] pb-2">4. IT業界におけるコアコンピタンスの具体例</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>分類</th>
+                            <th>コアコンピタンスの例</th>
+                            <th>企業事例（イメージ）</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>技術・開発力</strong></td>
+                            <td>ハードウェアとソフトウェアを高度に統合する開発能力</td>
+                            <td><strong>Apple:</strong> iPhoneやMacなど、シームレスな体験を提供</td>
+                        </tr>
+                        <tr>
+                            <td><strong>データ活用能力</strong></td>
+                            <td>膨大なデータを解析し、個々のユーザーに最適化する技術</td>
+                            <td><strong>Amazon:</strong> 購買データに基づく精緻なレコメンデーション</td>
+                        </tr>
+                        <tr>
+                            <td><strong>UX/UIデザイン</strong></td>
+                            <td>複雑な機能でも直感的に使えるインターフェース設計能力</td>
+                            <td><strong>Slack:</strong> ストレスのないコミュニケーション体験を実現</td>
+                        </tr>
+                        <tr>
+                            <td><strong>特定ドメイン知識</strong></td>
+                            <td>特定業界の業務プロセスを深く理解し、課題解決する能力</td>
+                            <td><strong>freee:</strong> 中小企業のバックオフィス業務に関する深い知見</td>
+                        </tr>
+                        <tr>
+                            <td><strong>プラットフォーム</strong></td>
+                            <td>多くの開発者や企業を惹きつける強力なエコシステム</td>
+                            <td><strong>Microsoft (Azure):</strong> 安定したクラウド基盤と開発者ツール</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <div class="grid md:grid-cols-3 gap-8 text-lg">
-                <div class="p-6 bg-gray-50 rounded-lg">
-                    <h3 class="text-2xl font-bold mb-3 text-[#005F73]">① 顧客価値</h3>
-                    <ul class="list-disc pl-4 space-y-2">
-                        <li>顧客に大きな価値や便益をもたらすか？</li>
-                        <li>顧客は「この会社でなければ」と感じるか。</li>
-                    </ul>
-                </div>
-                <div class="p-6 bg-gray-50 rounded-lg">
-                    <h3 class="text-2xl font-bold mb-3 text-[#005F73]">② 模倣困難性</h3>
-                    <ul class="list-disc pl-4 space-y-2">
-                        <li>競合他社が簡単に真似できないか？</li>
-                        <li>技術の複雑さ、独自の文化、経験の蓄積など。</li>
-                    </ul>
-                </div>
-                <div class="p-6 bg-gray-50 rounded-lg">
-                    <h3 class="text-2xl font-bold mb-3 text-[#005F73]">③ 応用可能性</h3>
-                    <ul class="list-disc pl-4 space-y-2">
-                        <li>複数の製品や新しい市場に応用できるか？</li>
-                        <li>将来の事業展開の基盤となるか。</li>
-                    </ul>
+        </section>
+
+        <!-- Slide 7: 5 Steps -->
+        <section class="slide">
+            <div class="slide-content">
+                <h2 class="text-4xl text-[#005F73] mb-8 border-b-4 border-[#0A9396] pb-2">5. 自社のコアコンピタンスを見つける5つのステップ</h2>
+                <div class="space-y-6 text-lg">
+                    <div class="p-4 bg-gray-50 rounded-lg">
+                        <h3 class="font-bold text-xl text-[#005F73]">Step 1: 自社の「強み」を洗い出す</h3>
+                        <p class="ml-4 mt-2">技術、人材、組織、顧客基盤など、客観的な事実をできるだけ多くリストアップします。</p>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-lg">
+                        <h3 class="font-bold text-xl text-[#005F73]">Step 2: 3つの条件で「強み」を絞り込む</h3>
+                        <p class="ml-4 mt-2">洗い出した強みを、「顧客価値」「模倣困難性」「応用可能性」で評価し、ふるいにかけます。</p>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-lg">
+                        <h3 class="font-bold text-xl text-[#005F73]">Step 3: 顧客への提供価値を再定義する</h3>
+                        <p class="ml-4 mt-2">強みが「顧客にとってどのような本質的価値」を生んでいるのかを言語化します。</p>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-lg">
+                        <h3 class="font-bold text-xl text-[#005F73]">Step 4: 将来の事業展開を構想する</h3>
+                        <p class="ml-4 mt-2">コアコンピタンスを活かし、どのような新しい市場や製品に進出できるかを考えます。</p>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-lg">
+                        <h3 class="font-bold text-xl text-[#005F73]">Step 5: コアコンピタンスを定義し、社内に浸透させる</h3>
+                        <p class="ml-4 mt-2"><strong>簡潔で、誰もが理解できる言葉</strong>で定義し、あらゆる活動の判断基準として活用します。</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <!-- Slide 5: Examples -->
-    <div class="slide">
-        <div class="slide-content">
-            <h2 class="text-4xl text-[#005F73] mb-8 border-b-4 border-[#0A9396] pb-2">4. IT業界におけるコアコンピタンスの具体例</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>分類</th>
-                        <th>コアコンピタンスの例</th>
-                        <th>企業事例（イメージ）</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>技術・開発力</strong></td>
-                        <td>ハードウェアとソフトウェアを高度に統合する開発能力</td>
-                        <td><strong>Apple:</strong> iPhoneやMacなど、シームレスな体験を提供</td>
-                    </tr>
-                    <tr>
-                        <td><strong>データ活用能力</strong></td>
-                        <td>膨大なデータを解析し、個々のユーザーに最適化する技術</td>
-                        <td><strong>Amazon:</strong> 購買データに基づく精緻なレコメンデーション</td>
-                    </tr>
-                    <tr>
-                        <td><strong>UX/UIデザイン</strong></td>
-                        <td>複雑な機能でも直感的に使えるインターフェース設計能力</td>
-                        <td><strong>Slack:</strong> ストレスのないコミュニケーション体験を実現</td>
-                    </tr>
-                    <tr>
-                        <td><strong>特定ドメイン知識</strong></td>
-                        <td>特定業界の業務プロセスを深く理解し、課題解決する能力</td>
-                        <td><strong>freee:</strong> 中小企業のバックオフィス業務に関する深い知見</td>
-                    </tr>
-                    <tr>
-                        <td><strong>プラットフォーム</strong></td>
-                        <td>多くの開発者や企業を惹きつける強力なエコシステム</td>
-                        <td><strong>Microsoft (Azure):</strong> 安定したクラウド基盤と開発者ツール</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- Slide 6: 5 Steps -->
-    <div class="slide">
-        <div class="slide-content">
-            <h2 class="text-4xl text-[#005F73] mb-8 border-b-4 border-[#0A9396] pb-2">5. 自社のコアコンピタンスを見つける5つのステップ</h2>
-            <div class="space-y-6 text-lg">
-                <div class="p-4 bg-gray-50 rounded-lg">
-                    <h3 class="font-bold text-xl text-[#005F73]">Step 1: 自社の「強み」を洗い出す</h3>
-                    <p class="ml-4 mt-2">技術、人材、組織、顧客基盤など、客観的な事実をできるだけ多くリストアップします。</p>
-                </div>
-                <div class="p-4 bg-gray-50 rounded-lg">
-                    <h3 class="font-bold text-xl text-[#005F73]">Step 2: 3つの条件で「強み」を絞り込む</h3>
-                    <p class="ml-4 mt-2">洗い出した強みを、「顧客価値」「模倣困難性」「応用可能性」で評価し、ふるいにかけます。</p>
-                </div>
-                <div class="p-4 bg-gray-50 rounded-lg">
-                    <h3 class="font-bold text-xl text-[#005F73]">Step 3: 顧客への提供価値を再定義する</h3>
-                    <p class="ml-4 mt-2">強みが「顧客にとってどのような本質的価値」を生んでいるのかを言語化します。</p>
-                </div>
-                <div class="p-4 bg-gray-50 rounded-lg">
-                    <h3 class="font-bold text-xl text-[#005F73]">Step 4: 将来の事業展開を構想する</h3>
-                    <p class="ml-4 mt-2">コアコンピタンスを活かし、どのような新しい市場や製品に進出できるかを考えます。</p>
-                </div>
-                <div class="p-4 bg-gray-50 rounded-lg">
-                    <h3 class="font-bold text-xl text-[#005F73]">Step 5: コアコンピタンスを定義し、社内に浸透させる</h3>
-                    <p class="ml-4 mt-2"><strong>簡潔で、誰もが理解できる言葉</strong>で定義し、あらゆる活動の判断基準として活用します。</p>
-                </div>
+        <!-- Slide 8: Summary -->
+        <section class="slide bg-[#005F73] text-white">
+            <div class="slide-content text-center">
+                <h2 class="text-4xl mb-8">6. まとめ</h2>
+                <ul class="space-y-6 text-2xl list-none">
+                    <li>コアコンピタンスは、変化の激しいIT業界を勝ち抜くための<br><strong class="text-[#9EEAF9]">企業の「北極星」</strong>です。</li>
+                    <li>それは、単なる強みではなく、<br><strong class="text-[#9EEAF9]">顧客価値・模倣困難性・応用可能性</strong>の3つを兼ね備えた、競争力の源泉です。</li>
+                    <li>自社のコアコンピタンスを正しく定義し、全社で共有・強化し続けることが、<br><strong class="text-[#9EEAF9]">持続的な成長の鍵</strong>となります。</li>
+                </ul>
+                <h3 class="mt-16 text-3xl md:text-4xl font-bold">さあ、自社の「真の強み」を見つける旅を始めましょう。</h3>
             </div>
-        </div>
-    </div>
+        </section>
+    </main>
 
-    <!-- Slide 7: Summary -->
-    <div class="slide bg-[#005F73] text-white">
-        <div class="slide-content text-center">
-            <h2 class="text-4xl mb-8">6. まとめ</h2>
-            <ul class="space-y-6 text-2xl list-none">
-                <li>コアコンピタンスは、変化の激しいIT業界を勝ち抜くための<br><strong class="text-[#9EEAF9]">企業の「北極星」</strong>です。</li>
-                <li>それは、単なる強みではなく、<br><strong class="text-[#9EEAF9]">顧客価値・模倣困難性・応用可能性</strong>の3つを兼ね備えた、競争力の源泉です。</li>
-                <li>自社のコアコンピタンスを正しく定義し、全社で共有・強化し続けることが、<br><strong class="text-[#9EEAF9]">持続的な成長の鍵</strong>となります。</li>
-            </ul>
-            <h3 class="mt-16 text-3xl md:text-4xl font-bold">さあ、自社の「真の強み」を見つける旅を始めましょう。</h3>
-        </div>
-    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mainContainer = document.getElementById('main-container');
+            const slides = document.querySelectorAll('.slide');
+            const pagerContainer = document.getElementById('pager');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            let currentSlideIndex = 0;
 
+            // Create pager dots
+            slides.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.classList.add('pager-dot');
+                dot.dataset.index = index;
+                dot.addEventListener('click', () => {
+                    scrollToSlide(index);
+                });
+                pagerContainer.appendChild(dot);
+            });
+
+            const pagerDots = document.querySelectorAll('.pager-dot');
+
+            const updatePager = () => {
+                pagerDots.forEach(dot => dot.classList.remove('active'));
+                pagerDots[currentSlideIndex].classList.add('active');
+                
+                // Update button visibility
+                prevBtn.style.visibility = currentSlideIndex === 0 ? 'hidden' : 'visible';
+                nextBtn.style.visibility = currentSlideIndex === slides.length - 1 ? 'hidden' : 'visible';
+            };
+            
+            const scrollToSlide = (index) => {
+                slides[index].scrollIntoView({ behavior: 'smooth' });
+            };
+
+            // Event listeners for nav buttons
+            prevBtn.addEventListener('click', () => {
+                if (currentSlideIndex > 0) {
+                    scrollToSlide(currentSlideIndex - 1);
+                }
+            });
+
+            nextBtn.addEventListener('click', () => {
+                if (currentSlideIndex < slides.length - 1) {
+                    scrollToSlide(currentSlideIndex + 1);
+                }
+            });
+
+            // Intersection Observer to detect current slide
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const index = Array.from(slides).indexOf(entry.target);
+                        currentSlideIndex = index;
+                        updatePager();
+                    }
+                });
+            }, { threshold: 0.6 }); // Trigger when 60% of the slide is visible
+
+            slides.forEach(slide => observer.observe(slide));
+            
+            // Initial state
+            updatePager();
+        });
+    </script>
 </body>
 </html>
