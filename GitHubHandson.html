@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【スライド形式】GitHubかんたん入門ガイド</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+        }
+        .slide {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .slide.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* スクロールバーのスタイル */
+        .slide-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        .slide-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .slide-content::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        .slide-content::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        .prose table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .prose th, .prose td {
+            border: 1px solid #d1d5db;
+            padding: 0.75rem;
+        }
+        .prose th {
+            background-color: #f3f4f6;
+        }
+        .prose pre {
+            background-color: #1f2937;
+            color: #f3f4f6;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+        }
+        .prose code {
+            font-family: 'Courier New', Courier, monospace;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-4">
+
+    <div class="w-full max-w-4xl bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden" style="height: 70vh;">
+        
+        <!-- Slides Container -->
+        <div id="slides-container" class="flex-grow p-8 md:p-12 overflow-y-auto slide-content prose max-w-none">
+            
+            <!-- Slide 1: Title -->
+            <div class="slide">
+                <div class="flex flex-col items-center justify-center h-full text-center">
+                    <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">【初心者向け】<br>GitHubかんたん入門ガイド</h1>
+                    <p class="text-lg text-gray-600">プログラミングの世界へようこそ！<br>開発者の必須ツール「GitHub」の基本的な使い方を、ゼロから優しく解説します。</p>
+                </div>
+            </div>
+
+            <!-- Slide 2: What is GitHub? -->
+            <div class="slide">
+                <h2 class="text-3xl font-bold mb-6 border-b pb-2">Part 1: まずはここから！GitHubの基本</h2>
+                <h3 class="text-2xl font-semibold mb-4">GitHubって何？ Gitとの違いは？</h3>
+                <p class="mb-4">少しややこしいですが、<strong>Git</strong>と<strong>GitHub</strong>は別物です。</p>
+                <ul class="list-disc list-inside space-y-4">
+                    <li><strong>Git</strong>: あなたのパソコン上で動く「<strong>バージョン管理の魔法</strong>」です。ファイルの変更履歴を「セーブポイント」のように記録してくれます。間違えても過去に戻したり、変更点を見比べたりできる便利な道具です。</li>
+                    <li><strong>GitHub</strong>: Gitの魔法を、インターネット上で使えるようにした<strong>Webサービス</strong>です。Gitで記録したセーブポイント付きのファイルを、安全に保管・共有できます。</li>
+                </ul>
+            </div>
+
+            <!-- Slide 3: Why use GitHub? -->
+            <div class="slide">
+                <h2 class="text-3xl font-bold mb-6 border-b pb-2">Part 1: まずはここから！GitHubの基本</h2>
+                <h3 class="text-2xl font-semibold mb-4">なぜGitHubを使うの？</h3>
+                <ul class="list-disc list-inside space-y-3 text-lg">
+                    <li><strong class="text-blue-600">最強のバックアップ</strong>: あなたのコードがGitHub上にあるので、もしパソコンが壊れても安心です。</li>
+                    <li><strong class="text-blue-600">チーム作業がスムーズに</strong>: 誰がどこを直したか一目瞭然。複数人での開発がとても楽になります。</li>
+                    <li><strong class="text-blue-600">自分の作品集になる</strong>: 作ったものを公開すれば、あなたのスキルを証明するポートフォリオになります。</li>
+                    <li><strong class="text-blue-600">世界とつながる</strong>: 世界中の開発者が公開しているコードを読んだり、プロジェクトに参加したりできます。</li>
+                </ul>
+            </div>
+
+            <!-- Slide 4: Account Creation -->
+            <div class="slide">
+                <h2 class="text-3xl font-bold mb-6 border-b pb-2">Part 1: まずはここから！GitHubの基本</h2>
+                <h3 class="text-2xl font-semibold mb-4">アカウントを作ってみよう</h3>
+                <p class="mb-4">まずはGitHubの世界への扉を開きましょう。</p>
+                <ol class="list-decimal list-inside space-y-2">
+                    <li><a href="https://github.com/" target="_blank" class="text-blue-600 hover:underline">GitHub公式サイト</a>にアクセスします。</li>
+                    <li>画面右上の「Sign up」ボタンをクリック。</li>
+                    <li>画面の指示に従って、メールアドレス、パスワード、ユーザー名を入力します。</li>
+                    <li>届いた確認メールのリンクをクリックして、認証を完了させればOKです！</li>
+                </ol>
+                <p class="mt-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-md">プランは「Free（無料）」で全く問題ありません。</p>
+            </div>
+
+            <!-- Slide 5: Basic Terminology -->
+            <div class="slide">
+                <h2 class="text-3xl font-bold mb-6 border-b pb-2">Part 2: これだけは覚えたい！基本用語</h2>
+                <p>専門用語が出てきますが、身近なものに例えると簡単です。</p>
+                <table>
+                    <thead>
+                        <tr><th>用語</th><th>例えるなら…</th><th>説明</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>リポジトリ</strong></td><td>プロジェクトの「<strong>保管庫</strong>」</td><td>ソースコードや画像など、プロジェクトの全ファイルを保管する場所。</td></tr>
+                        <tr><td><strong>コミット</strong></td><td>「<strong>セーブポイントを作る</strong>」</td><td>ファイルの変更を、メッセージ付きでリポジトリに記録する操作。</td></tr>
+                        <tr><td><strong>プッシュ</strong></td><td>「<strong>オンラインにアップロード</strong>」</td><td>PC上のセーブポイントを、GitHub上の保管庫に送信すること。</td></tr>
+                        <tr><td><strong>プル</strong></td><td>「<strong>最新版をダウンロード</strong>」</td><td>GitHub上の最新の状態を、自分のPCに持ってくること。</td></tr>
+                        <tr><td><strong>ブランチ</strong></td><td>「<strong>安全な作業用のコピー</strong>」</td><td>メインのコードに影響を与えずに、新しい機能追加などを試すための「枝分かれ」機能。</td></tr>
+                        <tr><td><strong>マージ</strong></td><td>「<strong>コピーした作業を合体</strong>」</td><td>枝分かれさせたブランチでの作業が完了したら、それをメインのコードに統合すること。</td></tr>
+                        <tr><td><strong>プルリクエスト</strong></td><td>「<strong>合体お願いします！という依頼</strong>」</td><td>「この変更をマージしてください」と、他のメンバーにレビューをお願いする機能。</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Slide 6: Setup -->
+            <div class="slide">
+                <h2 class="text-3xl font-bold mb-6 border-b pb-2">Part 3: 実際に使ってみよう！開発の流れを体験</h2>
+                <h3 class="text-2xl font-semibold mb-4">Step 1: 準備編（自分のPCの設定）</h3>
+                <ol class="list-decimal list-inside space-y-4">
+                    <li><strong>Gitをインストール</strong>: <a href="https://git-scm.com/downloads" target="_blank" class="text-blue-600 hover:underline">Git公式サイト</a>からダウンロードし、インストールします。</li>
+                    <li><strong>初期設定</strong>: ターミナル等を開き、ユーザー名とメールアドレスを登録します。
+                        <pre><code>git config --global user.name "あなたのGitHubユーザー名"
+git config --global user.email "あなたのGitHubメールアドレス"</code></pre>
+                    </li>
+                </ol>
+            </div>
+
+            <!-- Slide 7: Create Repository -->
+            <div class="slide">
+                <h2 class="text-3xl font-bold mb-6 border-b pb-2">Part 3: 実際に使ってみよう！</h2>
+                <h3 class="text-2xl font-semibold mb-4">Step 2: プロジェクトの箱を作る（リポジトリ作成）</h3>
+                <ol class="list-decimal list-inside space-y-2">
+                    <li>GitHubにログインし、右上の「+」から「New repository」を選択。</li>
+                    <li><strong>Repository name</strong> に好きな名前（例: `hello-world`）を入力。</li>
+                    <li><strong>Public</strong>（誰でも見れる）か **Private**（自分と招待した人だけ）かを選びます。</li>
+                    <li>「**Add a README file**」にチェックを入れるのがおすすめです。</li>
+                    <li>「Create repository」ボタンをクリックして完成！</li>
+                </ol>
+            </div>
+            
+            <!-- Slide 8: Clone -->
+            <div class="slide">
+                <h2 class="text-3xl font-bold mb-6 border-b pb-2">Part 3: 実際に使ってみよう！</h2>
+                <h3 class="text-2xl font-semibold mb-4">Step 3: コードをPCに持ってくる（クローン）</h3>
+                 <p class="mb-4">GitHub上に作った保管庫を、自分のPCに丸ごとコピーします。</p>
+                <ol class="list-decimal list-inside space-y-2">
+                    <li>作成したリポジトリのページで、緑色の「&lt;&gt; Code」ボタンをクリック。</li>
+                    <li>表示されたURLをコピーします。</li>
+                    <li>ターミナルで、作業したいフォルダに移動し、以下のコマンドを実行します。
+                        <pre><code>git clone コピーしたURL</code></pre>
+                    </li>
+                </ol>
+            </div>
+
+            <!-- Slide 9: Add & Commit -->
+            <div class="slide">
+                <h2 class="text-3xl font-bold mb-6 border-b pb-2">Part 3: 実際に使ってみよう！</h2>
+                <h3 class="text-2xl font-semibold mb-4">Step 4: コードを書いて記録する（編集 → add → commit）</h3>
+                <ol class="list-decimal list-inside space-y-3">
+                    <li><strong>ファイル編集</strong>: クローンしてできたフォルダ内で、新しいファイルを作ったり編集します。</li>
+                    <li><strong>変更を記録対象に</strong>: どのファイルをセーブポイントに含めるかを選びます。
+                        <pre><code># 変更した全てのファイルを対象にする場合
+git add .</code></pre>
+                    </li>
+                    <li><strong>セーブポイント作成</strong>: メッセージを付けて変更を記録します。
+                        <pre><code>git commit -m "初めてのコミット！"</code></pre>
+                    </li>
+                </ol>
+            </div>
+            
+            <!-- Slide 10: Push -->
+            <div class="slide">
+                <h2 class="text-3xl font-bold mb-6 border-b pb-2">Part 3: 実際に使ってみよう！</h2>
+                <h3 class="text-2xl font-semibold mb-4">Step 5: 記録をGitHubに送る（プッシュ）</h3>
+                <p>PC上で作ったセーブポイントを、GitHubにアップロードします。</p>
+                <pre><code>git push origin main</code></pre>
+                <p class="mt-4">これで、あなたの変更がGitHub上のリポジトリに反映されました！ブラウザで確認してみましょう。</p>
+            </div>
+
+            <!-- Slide 11: Branching -->
+            <div class="slide">
+                <h2 class="text-3xl font-bold mb-6 border-b pb-2">Part 4: チーム開発の基本！</h2>
+                <h3 class="text-2xl font-semibold mb-4">安全に作業するための「ブランチ」</h3>
+                <p>完成しているメインのコード（`main`ブランチ）を直接いじるのは危険です。そこで、新しい作業を始めるときは「ブランチ」を切って、安全な場所で作業するのが基本です。</p>
+                <ol class="list-decimal list-inside space-y-3 mt-4">
+                    <li><strong>ブランチ作成と移動</strong>:
+                        <pre><code>git checkout -b feature/add-new-text</code></pre>
+                    </li>
+                    <li><strong>作業</strong>: このブランチで、自由にファイル編集、add、commitを行います。</li>
+                    <li><strong>プッシュ</strong>: 作業が終わったら、この新しいブランチをGitHubにプッシュします。
+                         <pre><code>git push -u origin feature/add-new-text</code></pre>
+                    </li>
+                </ol>
+            </div>
+            
+            <!-- Slide 12: Pull Request -->
+            <div class="slide">
+                <h2 class="text-3xl font-bold mb-6 border-b pb-2">Part 4: チーム開発の基本！</h2>
+                <h3 class="text-2xl font-semibold mb-4">変更を提案する「プルリクエスト」</h3>
+                <p>ブランチでの作業が完了したら、「この変更をメインのコードに合体してください！」とお願いするのが<strong>プルリクエスト</strong>です。</p>
+                 <ol class="list-decimal list-inside space-y-2 mt-4">
+                    <li>ブランチをプッシュすると、GitHubのリポジトリページに「Compare & pull request」ボタンが表示されるのでクリック。</li>
+                    <li>変更内容がわかるようにタイトルと説明を書き、「Create pull request」をクリック。</li>
+                    <li>チームメンバーが内容を確認（レビュー）し、問題なければ「Merge pull request」ボタンで、あなたの変更がメインのコードに無事統合されます。</li>
+                </ol>
+            </div>
+
+            <!-- Slide 13: Summary -->
+            <div class="slide">
+                 <div class="flex flex-col items-center justify-center h-full text-center">
+                    <h2 class="text-3xl font-bold mb-6">まとめ：次のステップへ</h2>
+                    <p class="mb-4">お疲れ様でした！これであなたもGitHubの基本的な使い方がマスターできました。</p>
+                    <p class="mb-6">今日学んだサイクル（<strong>pull → 編集 → add → commit → push</strong>）を繰り返すことが、上達への一番の近道です。</p>
+                    <p>さらに興味が湧いたら、Issue、GitHub Pages、OSSへの貢献といった機能にも挑戦してみてください！</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Navigation -->
+        <div class="bg-gray-50 border-t p-4 flex items-center justify-between">
+            <!-- Pager Dots -->
+            <div id="pager-dots" class="flex items-center justify-center space-x-2">
+                <!-- Dots will be inserted here by JS -->
+            </div>
+
+            <!-- Prev/Next Buttons -->
+            <div class="flex items-center space-x-2">
+                <button id="prev-btn" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                </button>
+                <span id="page-counter" class="text-sm text-gray-600 font-medium"></span>
+                <button id="next-btn" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.slide');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const pageCounter = document.getElementById('page-counter');
+            const pagerDotsContainer = document.getElementById('pager-dots');
+            
+            let currentSlide = 0;
+            const totalSlides = slides.length;
+
+            // Create pager dots
+            for (let i = 0; i < totalSlides; i++) {
+                const dot = document.createElement('button');
+                dot.classList.add('w-3', 'h-3', 'rounded-full', 'bg-gray-300', 'hover:bg-gray-500', 'transition-colors');
+                dot.setAttribute('data-slide', i);
+                dot.addEventListener('click', () => {
+                    goToSlide(i);
+                });
+                pagerDotsContainer.appendChild(dot);
+            }
+            const pagerDots = pagerDotsContainer.querySelectorAll('button');
+
+            function goToSlide(slideIndex) {
+                currentSlide = slideIndex;
+                
+                // Hide all slides and set active class to the current one
+                slides.forEach((slide, index) => {
+                    slide.classList.toggle('active', index === currentSlide);
+                });
+                
+                // Update button states
+                prevBtn.disabled = currentSlide === 0;
+                nextBtn.disabled = currentSlide === totalSlides - 1;
+                
+                // Update page counter
+                pageCounter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+
+                // Update pager dots
+                pagerDots.forEach((dot, index) => {
+                    dot.classList.toggle('bg-gray-600', index === currentSlide);
+                    dot.classList.toggle('bg-gray-300', index !== currentSlide);
+                });
+
+                // Scroll to top of slide content on change
+                document.getElementById('slides-container').scrollTop = 0;
+            }
+
+            // Event Listeners for Prev/Next buttons
+            prevBtn.addEventListener('click', () => {
+                if (currentSlide > 0) {
+                    goToSlide(currentSlide - 1);
+                }
+            });
+
+            nextBtn.addEventListener('click', () => {
+                if (currentSlide < totalSlides - 1) {
+                    goToSlide(currentSlide + 1);
+                }
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') {
+                    prevBtn.click();
+                } else if (e.key === 'ArrowRight') {
+                    nextBtn.click();
+                }
+            });
+
+            // Initialize the first slide
+            goToSlide(0);
+        });
+    </script>
+</body>
+</html>
