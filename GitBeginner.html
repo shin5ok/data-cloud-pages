@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git & GitHub ワークフロー・インフォグラフィック</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 300px;
+            }
+        }
+        .flow-arrow {
+            position: relative;
+            text-align: center;
+            color: #118AB2;
+        }
+        .flow-arrow::after {
+            content: '▼';
+            font-size: 2rem;
+            line-height: 1;
+        }
+        .flow-arrow-horizontal {
+            position: relative;
+            text-align: center;
+            color: #118AB2;
+        }
+        .flow-arrow-horizontal::after {
+            content: '▶';
+            font-size: 2rem;
+            line-height: 1;
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body class="text-[#073B4C]">
+
+    <div class="container mx-auto p-4 md:p-8">
+        
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-6xl font-black text-[#073B4C] mb-2">Git & GitHub 完全ガイド</h1>
+            <p class="text-lg md:text-xl text-[#118AB2]">開発初心者のためのビジュアル・ワークフロー</p>
+        </header>
+
+        <main class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+            <div class="md:col-span-2 card">
+                <h2 class="text-2xl font-bold text-[#118AB2] mb-4">1. Gitの基本概念</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="font-bold mb-2">リポジトリ: プロジェクトの貯蔵庫</h3>
+                        <p class="text-sm mb-4">ファイルの変更履歴をすべて記録する場所。自分のPCにある「ローカル」と、サーバー上で共有する「リモート」があります。</p>
+                        <div class="flex items-center justify-around p-4 bg-gray-50 rounded-lg">
+                            <div class="text-center">
+                                <span class="text-4xl">💻</span>
+                                <p class="font-bold">ローカル</p>
+                            </div>
+                            <div class="text-5xl font-extrabold text-[#06D6A0]">↔</div>
+                            <div class="text-center">
+                                <span class="text-4xl">☁️</span>
+                                <p class="font-bold">リモート (GitHub)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-bold mb-2">ブランチ: 開発の「下書き」スペース</h3>
+                        <p class="text-sm mb-4">GitHub Flowでは、機能追加やバグ修正といった新しい作業は、必ず`main`から新しいブランチを作成して行います。これにより、常に安定しているべき`main`ブランチを汚すことなく、安全に開発を進めることができます。</p>
+                        <div class="p-4 bg-gray-50 rounded-lg font-mono text-sm">
+                            <div class="relative pl-4">
+                                <div class="absolute left-0 top-0 bottom-0 w-1 bg-[#118AB2]"></div>
+                                <div class="flex items-center mb-6">
+                                    <span class="font-bold text-[#118AB2]">main</span>
+                                    <span class="ml-2 text-xs text-gray-500">(安定版)</span>
+                                </div>
+                                <div class="relative pl-8">
+                                    <div class="absolute left-[-4px] top-2 h-1 w-8 bg-[#FF6B6B]"></div>
+                                    <div class="absolute left-6 top-2 bottom-[-8px] w-1 bg-[#FF6B6B]"></div>
+                                    <div class="flex items-center">
+                                         <span class="font-bold text-[#FF6B6B]">feature/add-new-page</span>
+                                         <span class="ml-2 text-xs text-gray-500">(作業中)</span>
+                                    </div>
+                                    <p class="text-xs text-gray-600 mt-1">ここで自由にコミット！</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:col-span-2 card">
+                <h2 class="text-2xl font-bold text-[#118AB2] mb-4">2. 基本的なローカル作業フロー</h2>
+                <p class="text-center mb-6">自分のPCでの作業は「追加 → 記録」の繰り返し。この3つのコマンドが基本です。</p>
+                <div class="flex flex-col md:flex-row items-center justify-around gap-4">
+                    <div class="text-center p-4 rounded-lg w-full md:w-1/3">
+                        <p class="text-5xl mb-2">①</p>
+                        <p class="font-mono text-lg bg-[#073B4C] text-white rounded-md px-4 py-2">git add</p>
+                        <p class="mt-2 text-sm">変更を記録の<br>候補に入れる</p>
+                    </div>
+                    <div class="hidden md:block flow-arrow-horizontal w-12"></div>
+                    <div class="md:hidden flow-arrow w-12"></div>
+                    <div class="text-center p-4 rounded-lg w-full md:w-1/3">
+                        <p class="text-5xl mb-2">②</p>
+                        <p class="font-mono text-lg bg-[#073B4C] text-white rounded-md px-4 py-2">git commit</p>
+                        <p class="mt-2 text-sm">メッセージを付けて<br>変更を記録する</p>
+                    </div>
+                    <div class="hidden md:block flow-arrow-horizontal w-12"></div>
+                    <div class="md:hidden flow-arrow w-12"></div>
+                    <div class="text-center p-4 rounded-lg w-full md:w-1/3">
+                        <p class="text-5xl mb-2">③</p>
+                        <p class="font-mono text-lg bg-[#073B4C] text-white rounded-md px-4 py-2">git push</p>
+                        <p class="mt-2 text-sm">記録をリモートに<br>アップロードする</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2 class="text-2xl font-bold text-[#118AB2] mb-4">初心者がよく使うコマンド</h2>
+                <p class="text-sm mb-4 text-center">実際の開発では、これらのコマンドが頻繁に使われます。特に`commit`と`push`は日常的な操作です。</p>
+                <div class="chart-container">
+                    <canvas id="commandChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="text-2xl font-bold text-[#118AB2] mb-4">コンフリクトの解消</h2>
+                <p class="text-sm mb-4">複数人が同じ箇所を変更すると発生する「コンフリクト」。Gitが示すマークを手がかりに、正しい形に手動で修正します。</p>
+                <div class="bg-gray-800 text-white font-mono p-4 rounded-lg text-xs overflow-x-auto">
+                    <pre><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+Hello, Local!
+=======
+Hello, GitHub!
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; origin/main</code></pre>
+                </div>
+                <div class="flow-arrow my-2"></div>
+                <div class="bg-green-100 text-green-800 font-mono p-4 rounded-lg text-xs">
+                    <pre><code>Hello, World!</code></pre>
+                </div>
+                 <p class="text-sm mt-2 text-center">手動で正しいコードに修正し、再度コミットすれば解消完了！</p>
+            </div>
+
+            <div class="md:col-span-2 card">
+                <h2 class="text-2xl font-bold text-[#118AB2] mb-6 text-center">3. GitHub Flow: チーム開発の標準プロセス</h2>
+                <p class="text-center text-sm mb-8 max-w-2xl mx-auto">安全かつ効率的にチーム開発を進めるための、シンプルで強力なワークフローです。`main`ブランチは常に正常な状態に保たれます。</p>
+                <div class="relative mx-auto p-4">
+                    <div class="absolute h-full w-1 bg-gray-200 top-0 left-4 md:left-1/2 -translate-x-1/2"></div>
+                    
+                    <div class="relative mb-10 flex items-center w-full">
+                        <div class="z-10 w-8 h-8 rounded-full bg-[#FFD166] text-white flex items-center justify-center font-bold absolute left-4 md:left-1/2 -translate-x-1/2 border-4 border-white">1</div>
+                        <div class="p-4 rounded-lg bg-gray-50 shadow-sm ml-12 md:ml-0 md:w-[45%] md:mr-auto">
+                            <h3 class="font-bold text-lg text-[#073B4C]">Issue作成</h3>
+                            <p class="text-sm mt-1">タスクやバグをIssueとして起票し、作業内容を明確化します。</p>
+                        </div>
+                    </div>
+
+                    <div class="relative mb-10 flex items-center w-full">
+                         <div class="z-10 w-8 h-8 rounded-full bg-[#FF6B6B] text-white flex items-center justify-center font-bold absolute left-4 md:left-1/2 -translate-x-1/2 border-4 border-white">2</div>
+                         <div class="p-4 rounded-lg bg-gray-50 shadow-sm ml-12 md:ml-auto md:mr-0 md:w-[45%]">
+                            <h3 class="font-bold text-lg text-[#073B4C]">ブランチ作成</h3>
+                            <p class="text-sm mt-1">`main`から作業用ブランチを切り、安全な環境で開発を開始します。</p>
+                        </div>
+                    </div>
+
+                    <div class="relative mb-10 flex items-center w-full">
+                        <div class="z-10 w-8 h-8 rounded-full bg-[#06D6A0] text-white flex items-center justify-center font-bold absolute left-4 md:left-1/2 -translate-x-1/2 border-4 border-white">3</div>
+                        <div class="p-4 rounded-lg bg-gray-50 shadow-sm ml-12 md:ml-0 md:w-[45%] md:mr-auto">
+                            <h3 class="font-bold text-lg text-[#073B4C]">開発 & Push</h3>
+                            <p class="text-sm mt-1">コーディングを行い、定期的にコミットしてリモートにPushします。</p>
+                        </div>
+                    </div>
+
+                    <div class="relative mb-10 flex items-center w-full">
+                        <div class="z-10 w-8 h-8 rounded-full bg-[#118AB2] text-white flex items-center justify-center font-bold absolute left-4 md:left-1/2 -translate-x-1/2 border-4 border-white">4</div>
+                        <div class="p-4 rounded-lg bg-gray-50 shadow-sm ml-12 md:ml-auto md:mr-0 md:w-[45%]">
+                            <h3 class="font-bold text-lg text-[#073B4C]">Pull Request作成</h3>
+                            <p class="text-sm mt-1">変更内容をチームに通知し、レビューを依頼します。</p>
+                        </div>
+                    </div>
+
+                    <div class="relative flex items-center w-full">
+                        <div class="z-10 w-8 h-8 rounded-full bg-[#073B4C] text-white flex items-center justify-center font-bold absolute left-4 md:left-1/2 -translate-x-1/2 border-4 border-white">5</div>
+                        <div class="p-4 rounded-lg bg-gray-50 shadow-sm ml-12 md:ml-0 md:w-[45%] md:mr-auto">
+                            <h3 class="font-bold text-lg text-[#073B4C]">レビュー & マージ</h3>
+                            <p class="text-sm mt-1">承認後、変更を`main`ブランチに統合して、作業は完了です。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:col-span-2 card">
+                <h2 class="text-2xl font-bold text-[#118AB2] mb-4 text-center">Pull Requestのライフサイクル</h2>
+                <p class="text-sm mb-8 text-center max-w-2xl mx-auto">Pull Requestが作成されてからマージされるまでの道のりです。レビューと修正のサイクルを繰り返すことで、コードの品質が保証されます。</p>
+                <div class="space-y-4 max-w-lg mx-auto">
+                    <div class="flex items-center p-3 bg-blue-50 rounded-lg shadow-sm">
+                        <div class="w-10 h-10 rounded-full bg-[#118AB2] text-white flex items-center justify-center font-bold flex-shrink-0 mr-4">1</div>
+                        <div>
+                            <h3 class="font-bold">Pull Request 作成</h3>
+                            <p class="text-xs">変更内容をチームに通知し、レビューを依頼します。</p>
+                        </div>
+                    </div>
+                    <div class="flow-arrow ml-4"></div>
+                    <div class="flex items-center p-3 bg-yellow-50 rounded-lg shadow-sm">
+                        <div class="w-10 h-10 rounded-full bg-[#FFD166] text-white flex items-center justify-center font-bold flex-shrink-0 mr-4">2</div>
+                        <div>
+                            <h3 class="font-bold">レビュー & 自動テスト</h3>
+                            <p class="text-xs">チームメンバーがコードを確認し、自動化されたテストが実行されます。</p>
+                        </div>
+                    </div>
+                    <div class="flow-arrow ml-4"></div>
+                    <div class="relative p-4 border-2 border-dashed border-[#FF6B6B] rounded-lg">
+                        <div class="absolute top-[-1rem] left-1/2 -translate-x-1/2 px-2 bg-white font-bold text-[#FF6B6B]">修正が必要な場合</div>
+                        <div class="flex items-center p-3 bg-red-50 rounded-lg shadow-sm">
+                            <div class="w-10 h-10 rounded-full bg-[#FF6B6B] text-white flex items-center justify-center font-bold flex-shrink-0 mr-4">3</div>
+                            <div>
+                                <h3 class="font-bold">修正 & 再Push (ステップ2に戻る)</h3>
+                                <p class="text-xs">フィードバックに基づきコードを修正し、再度Pushします。このサイクルは承認されるまで続きます。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flow-arrow ml-4"></div>
+                    <div class="flex items-center p-3 bg-green-50 rounded-lg shadow-sm">
+                        <div class="w-10 h-10 rounded-full bg-[#06D6A0] text-white flex items-center justify-center font-bold flex-shrink-0 mr-4">4</div>
+                        <div>
+                            <h3 class="font-bold">承認</h3>
+                            <p class="text-xs">レビューで問題がなければ、変更が承認されます。</p>
+                        </div>
+                    </div>
+                    <div class="flow-arrow ml-4"></div>
+                    <div class="flex items-center p-3 bg-[#073B4C] text-white rounded-lg shadow-sm">
+                        <div class="w-10 h-10 rounded-full bg-white text-[#073B4C] flex items-center justify-center font-bold flex-shrink-0 mr-4">5</div>
+                        <div>
+                            <h3 class="font-bold">マージ & 完了</h3>
+                            <p class="text-xs">承認されたコードが `main` ブランチに統合され、タスク完了です。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <footer class="text-center mt-12 py-6 border-t border-gray-300">
+            <p class="text-gray-600">このインフォグラフィックでGitとGitHubの基本をマスターしよう！</p>
+        </footer>
+
+    </div>
+
+    <script>
+        function wrapLabels(label, maxWidth) {
+            const words = label.split(' ');
+            let lines = [];
+            let currentLine = '';
+            words.forEach(word => {
+                if ((currentLine + ' ' + word).length > maxWidth) {
+                    lines.push(currentLine);
+                    currentLine = word;
+                } else {
+                    currentLine = currentLine ? currentLine + ' ' + word : word;
+                }
+            });
+            lines.push(currentLine);
+            return lines;
+        }
+
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            }
+            return label;
+        };
+        
+        const sharedChartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        title: tooltipTitleCallback
+                    }
+                }
+            }
+        };
+
+        const commandCtx = document.getElementById('commandChart').getContext('2d');
+        new Chart(commandCtx, {
+            type: 'bar',
+            data: {
+                labels: ['commit', 'push', 'add', 'pull', 'branch', 'checkout'],
+                datasets: [{
+                    label: '初心者のコマンド使用頻度（想定）',
+                    data: [95, 85, 80, 60, 50, 45],
+                    backgroundColor: ['#FF6B6B', '#FFD166', '#06D6A0', '#118AB2', '#073B4C', '#7F7F7F'],
+                    borderColor: 'rgba(255, 255, 255, 0.8)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                ...sharedChartOptions,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: '頻度スコア'
+                        }
+                    }
+                },
+                indexAxis: 'y',
+            }
+        });
+    </script>
+</body>
+</html>
